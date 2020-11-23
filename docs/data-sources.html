@@ -73,8 +73,12 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#about-dataset"><i class="fa fa-check"></i><b>2.1</b> About Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#head"><i class="fa fa-check"></i><b>3.1</b> HEAD</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
 </ul></li>
@@ -102,7 +106,27 @@
             <section class="normal" id="section-">
 <div id="data-sources" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<div id="about-dataset" class="section level2">
+<h2><span class="header-section-number">2.1</span> About Dataset</h2>
+<p>Inspired by a popular and realistic new Netflix series The Queen’s Gambit, starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates.</p>
+<p>The chess games dataset studied in this project was collected from Kaggle.com where the publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server.</p>
+<p>Variables included but not limited in this study are:</p>
+<p>• Game ID</p>
+<p>• Rated (True / False)</p>
+<p>• Start Time</p>
+<p>• End Time</p>
+<p>• Number of Turns</p>
+<p>• Victory Status (Resign / Mate)</p>
+<p>• Winner (White / Black)</p>
+<p>• Time Increment: An amount of time added to the clock after each move is made.</p>
+<p>• Players Rating Number: Numbers represent goodness of players. Better players have higher scores which are calculated by the Glicko-2 rating method.</p>
+<p>• All Moves in Standard Chess Notation: Notations that recorded the moves or the position of pieces on a chessboard by algebraic chess notation.</p>
+<p>• Opening Name: A list of names of chess openings which refers to the initial moves of a chess game.</p>
+<p>• Opening Ply: Number of moves in the opening phase.</p>
+<p>• Opening Eco: Standardized code for chess opening names.</p>
+<p>No major problems or issues were found in this dataset, despite it is a three-year-old dataset, lots of information were contained within a single chess game. While exploring dataset, an interesting observation was captured. To against King’s Gambit players (a standard offensive opening), the Sicilian Defense strategy (a standard defensive opening) were used commonly among players. And we shall discuss its effect on winning rates in greater details following.</p>
 
+</div>
 </div>
             </section>
 
