@@ -1,1 +1,18 @@
 # Data transformation
+
+## HEAD
+
+```{r, include=FALSE}
+games <- read.csv("dataset/games.csv")
+```
+
+The dataset is very clear and does not require much transformation. To be able to work with the dataset, we just read the csv file and get the dataset. Then we change the column names from words connected by “_” into words connected by “.”.
+
+```{r}
+
+names(games)<-c("id", "rated", "created.at", "last.move.at", "turns", 
+                  "victory.status", "winnner", "increment.code",
+                  "white.id", "white.rating", "black.id", "black.rating", 
+                  "moves","opening.eco", "opening.name", "opening.ply")
+head(games)
+```
