@@ -2,7 +2,7 @@
 
 
 ```{r, include=FALSE}
-games <- read.csv("~/Documents/GitHub/EDAV_group17_chess/dataset/games.csv")
+games <- read.csv("https://raw.githubusercontent.com/wangyis/EDAV_group17_chess/main/dataset/games.csv")
 ```
 
 
