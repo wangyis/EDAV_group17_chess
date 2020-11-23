@@ -1,6 +1,6 @@
 # Data transformation
 
-## HEAD
+## Data Column Names
 
 ```{r, include=FALSE}
 games <- read.csv("dataset/games.csv")

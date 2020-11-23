@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "Final Project Draft"
+author: "Hanlin Tong, Wendy Qian, Yishi Wang"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---

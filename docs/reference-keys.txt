@@ -1,10 +1,10 @@
 introduction
 data-sources
+about-dataset
 data-transformation
+data-column-names
 missing-values
+check-missing-values
 results
 interactive-component
 conclusion
-check-missing-values
-head
-about-dataset
