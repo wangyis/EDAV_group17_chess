@@ -11,4 +11,4 @@ games <- read.csv("~/Documents/GitHub/EDAV_group17_chess/dataset/games.csv")
 table(is.na(games))
 ```
 
-As the table shows, there is no missing values in this dataset.
+We use `is.na()` to check the missing values in the dataset. As the table shows, there is no missing values in this dataset.

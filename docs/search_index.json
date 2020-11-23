@@ -1,1 +1,1 @@
-[["missing-values.html", "Chapter 4 Missing values 4.1 Check Missing Values", " Chapter 4 Missing values 4.1 Check Missing Values ## ## FALSE ## 320928 As the table shows, there is no missing values in this dataset. "]]
+[["missing-values.html", "Chapter 4 Missing values 4.1 Check Missing Values", " Chapter 4 Missing values 4.1 Check Missing Values ## ## FALSE ## 320928 We use is.na() to check the missing values in the dataset. As the table shows, there is no missing values in this dataset. "]]
