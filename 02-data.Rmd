@@ -2,21 +2,21 @@
 
 <<<<<<< HEAD
 
-Inspired by a popular and realistic new Netflix series The Queen’s Gambit, starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates. 
-The chess games dataset studied in this project was collected from Kaggle.com where the publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server. 
+Inspired by a popular and realistic new Netflix series The Queen’s Gambit, starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates.
+The chess games dataset studied in this project was collected from Kaggle.com where the publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server.
 Variables included but not limited in this study are:
 •	Game ID
 •	Rated (True / False)
 •	Start Time
 •	End Time
-•	Number of Turns 
+•	Number of Turns
 •	Victory Status (Resign / Mate)
 •	Winner (White / Black)
-•	Time Increment: An amount of time added to the clock after each move is made. 
+•	Time Increment: An amount of time added to the clock after each move is made.
 •	Players Rating Number: Numbers represent goodness of players. Better players have higher scores which are calculated by the Glicko-2 rating method.   
-•	All Moves in Standard Chess Notation: Notations that recorded the moves or the position of pieces on a chessboard by algebraic chess notation. 
-•	Opening Name: A list of names of chess openings which refers to the initial moves of a chess game. 
-•	Opening Ply: Number of moves in the opening phase. 
+•	All Moves in Standard Chess Notation: Notations that recorded the moves or the position of pieces on a chessboard by algebraic chess notation.
+•	Opening Name: A list of names of chess openings which refers to the initial moves of a chess game.
+•	Opening Ply: Number of moves in the opening phase.
 •	Opening Eco: Standardized code for chess opening names.
 No major problems or issues were found in this dataset, despite it is a three-year-old dataset, lots of information were contained within a single chess game. While exploring dataset, an interesting observation was captured. To against King’s Gambit players (a standard offensive opening), the Sicilian Defense strategy (a standard defensive opening) were used commonly among players. And we shall discuss its effect on winning rates in greater details following.  
 
