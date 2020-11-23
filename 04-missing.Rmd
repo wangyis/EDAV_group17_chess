@@ -1,1 +1,14 @@
 # Missing values
+
+
+```{r, include=FALSE}
+games <- read.csv("~/Documents/GitHub/EDAV_group17_chess/dataset/games.csv")
+```
+
+
+## Check Missing Values
+```{r}
+table(is.na(games))
+```
+
+As the table shows, there is no missing values in this dataset.

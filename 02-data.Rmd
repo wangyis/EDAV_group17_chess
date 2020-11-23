@@ -1,2 +1,6 @@
 # Data sources
 
+```{r, include=FALSE}
+games <- read.csv("~/Documents/GitHub/EDAV_group17_chess/dataset/games.csv")
+```
+
