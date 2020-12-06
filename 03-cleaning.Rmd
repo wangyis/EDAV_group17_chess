@@ -1,18 +1,47 @@
 # Data transformation
 
-## Data Column Names
-
 ```{r, include=FALSE}
 games <- read.csv("dataset/games.csv")
+games <- games[-c(1,3,4,8,14,16)]
 ```
 
-The dataset is very clear and does not require much transformation. To be able to work with the dataset, we just read the csv file and get the dataset. Then we change the column names from words connected by “_” into words connected by “.”.
-
+## Cleaning Rated Status
 ```{r}
+library(stringr)
+games$rated <- str_to_upper(games$rated)
+table(games$rated)
+```
 
-names(games)<-c("id", "rated", "created.at", "last.move.at", "turns", 
-                  "victory.status", "winnner", "increment.code",
-                  "white.id", "white.rating", "black.id", "black.rating", 
-                  "moves","opening.eco", "opening.name", "opening.ply")
+## Cleaning Turns
+```{r}
+library(ggplot2)
+ggplot(data = games, aes(x = turns)) + geom_histogram(bins = 50) +
+  geom_vline(xintercept = 10, color = "red")
+
+games <- games[games$turns >= 10,]
+```
+
+
+## Cleaning Users
+```{r}
+tb <- table(c(games$white_id, games$black_id))
+tb <- tb[tb >= 3]
+ggplot(df, aes(x = Freq)) + geom_histogram() + geom_vline(xintercept = 3, color = "red") +
+  xlab("Number of games each player played")
+
+games <- games[(games$white_id %in% names(tb) & games$black_id %in% names(tb) ),]
+```
+
+## Cleaning Opening Names
+```{r}
+games$opening_name <- str_split_fixed(games$opening_name, ":", n = 2)[,1]
+games$opening_name <- str_split_fixed(games$opening_name, " [#|]", n = 2)[,1]
+head(sort(table(games$opening_name), decreasing = T), n = 20)
+```
+
+## Head
+```{r}
 head(games)
 ```
+
+
