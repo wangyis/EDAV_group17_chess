@@ -2,10 +2,32 @@
 
 ```{r, include=FALSE}
 games <- read.csv("dataset/games.csv")
-games <- games[-c(1,3,4,8,14,16)]
+```
+
+## Cleaning Trivial Variables
+
+The dataset has the following variables.
+
+```{r}
+colnames(games)
+```
+
+We wanted to remove ```id, created_at, last_move_at, increment_code, moves, opening_eco, opening_ply``` since some of them, like ```id``` or ```increment_code``` do not have pivotal information for our problems. Or they are providing similar information as other variables, such as ```opening_eco```.
+
+The rest variables are:
+
+```{r}
+games <- games[-c(1,3,4,8, 13, 14,16)]
+colnames(games)
 ```
 
 ## Cleaning Rated Status
+```{r}
+table(games$rated)
+```
+
+We changed all the strings to uppercase letter for consistency. 
+
 ```{r}
 library(stringr)
 games$rated <- str_to_upper(games$rated)
@@ -41,8 +63,11 @@ head(sort(table(games$opening_name), decreasing = T), n = 20)
 
 ## Head
 ```{r}
-head(games)
+library(kableExtra)
+kable(head(games)) %>% kable_styling() %>%
+  scroll_box(width = "100%", box_css = "border: 0px;")
 ```
+
 ```{r}
 write.csv(games, "dataset/clean_games.csv")
 ```

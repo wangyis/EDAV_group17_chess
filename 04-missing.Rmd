@@ -1,6 +1,5 @@
 # Missing values
 
-
 ```{r, include=FALSE}
 clean_games <- read.csv("dataset/clean_games.csv")
 ```
@@ -16,7 +15,7 @@ image(x)
 Based on the missing data plot, the dark represents missing value. As the plot shows, there is no dark area so that we don't have to take any actions to deal with this problem.
 
 ```{r}
-table(is.na(games))
+table(is.na(clean_games))
 ```
 
 We use `is.na()` to double-check the missing values in the dataset. As the table shows, there is no missing values in this dataset.
