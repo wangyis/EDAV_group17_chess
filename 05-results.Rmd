@@ -1,1 +1,6 @@
 # Results
+
+```{r, include=FALSE}
+clean_games <- read.csv("dataset/clean_games.csv")
+```
+

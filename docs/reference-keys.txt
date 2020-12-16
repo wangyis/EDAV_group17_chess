@@ -8,3 +8,11 @@ check-missing-values
 results
 interactive-component
 conclusion
+cleaning-rated-status
+cleaning-turns
+cleaning-users
+cleaning-opening-names
+head
+tab:unnamed-chunk-4
+cleaning-trivial-variables
+tab:unnamed-chunk-11

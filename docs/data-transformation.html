@@ -24,7 +24,7 @@
 <meta name="author" content="Hanlin Tong, Wendy Qian, Yishi Wang" />
 
 
-<meta name="date" content="2020-11-23" />
+<meta name="date" content="2020-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,8 @@
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 
@@ -77,7 +79,12 @@
 <li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#about-dataset"><i class="fa fa-check"></i><b>2.1</b> About Dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a><ul>
-<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#data-column-names"><i class="fa fa-check"></i><b>3.1</b> Data Column Names</a></li>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-trivial-variables"><i class="fa fa-check"></i><b>3.1</b> Cleaning Trivial Variables</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-rated-status"><i class="fa fa-check"></i><b>3.2</b> Cleaning Rated Status</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-turns"><i class="fa fa-check"></i><b>3.3</b> Cleaning Turns</a></li>
+<li class="chapter" data-level="3.4" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-users"><i class="fa fa-check"></i><b>3.4</b> Cleaning Users</a></li>
+<li class="chapter" data-level="3.5" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-opening-names"><i class="fa fa-check"></i><b>3.5</b> Cleaning Opening Names</a></li>
+<li class="chapter" data-level="3.6" data-path="data-transformation.html"><a href="data-transformation.html#head"><i class="fa fa-check"></i><b>3.6</b> Head</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
@@ -106,37 +113,288 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
-<div id="data-column-names" class="section level2">
-<h2><span class="header-section-number">3.1</span> Data Column Names</h2>
-<p>The dataset is very clear and does not require much transformation. To be able to work with the dataset, we just read the csv file and get the dataset. Then we change the column names from words connected by “_” into words connected by “.”.</p>
-<pre><code>##         id rated  created.at last.move.at turns victory.status winnner increment.code      white.id white.rating
-## 1 TZJHLljE FALSE 1.50421e+12  1.50421e+12    13      outoftime   white           15+2      bourgris         1500
-## 2 l1NXvwaE  TRUE 1.50413e+12  1.50413e+12    16         resign   black           5+10          a-00         1322
-## 3 mIICvQHh  TRUE 1.50413e+12  1.50413e+12    61           mate   white           5+10        ischia         1496
-## 4 kWKvrqYL  TRUE 1.50411e+12  1.50411e+12    61           mate   white           20+0 daniamurashov         1439
-## 5 9tXo1AUZ  TRUE 1.50403e+12  1.50403e+12    95           mate   white           30+3     nik221107         1523
-## 6 MsoDV9wj FALSE 1.50424e+12  1.50424e+12     5           draw    draw           10+0     trelynn17         1250
-##        black.id black.rating
-## 1          a-00         1191
-## 2     skinnerua         1261
-## 3          a-00         1500
-## 4  adivanov2009         1454
-## 5  adivanov2009         1469
-## 6 franklin14532         1002
-##                                                                                                                                                                                                                                                                                                                                                                                                         moves
-## 1                                                                                                                                                                                                                                                                                                                                                          d4 d5 c4 c6 cxd5 e6 dxe6 fxe6 Nf3 Bb4+ Nc3 Ba5 Bf4
-## 2                                                                                                                                                                                                                                                                                                                                            d4 Nc6 e4 e5 f4 f6 dxe5 fxe5 fxe5 Nxe5 Qd4 Nc6 Qe5+ Nxe5 c4 Bb4+
-## 3                                                                                                                                              e4 e5 d3 d6 Be3 c6 Be2 b5 Nd2 a5 a4 c5 axb5 Nc6 bxc6 Ra6 Nc4 a4 c3 a3 Nxa3 Rxa3 Rxa3 c4 dxc4 d5 cxd5 Qxd5 exd5 Be6 Ra8+ Ke7 Bc5+ Kf6 Bxf8 Kg6 Bxg7 Kxg7 dxe6 Kh6 exf7 Nf6 Rxh8 Nh5 Bxh5 Kg5 Rxh7 Kf5 Qf3+ Ke6 Bg4+ Kd6 Rh6+ Kc5 Qe3+ Kb5 c4+ Kb4 Qc3+ Ka4 Bd1#
-## 4                                                                                                                                  d4 d5 Nf3 Bf5 Nc3 Nf6 Bf4 Ng4 e3 Nc6 Be2 Qd7 O-O O-O-O Nb5 Nb4 Rc1 Nxa2 Ra1 Nb4 Nxa7+ Kb8 Nb5 Bxc2 Bxc7+ Kc8 Qd2 Qc6 Na7+ Kd7 Nxc6 bxc6 Bxd8 Kxd8 Qxb4 e5 Qb8+ Ke7 dxe5 Be4 Ra7+ Ke6 Qe8+ Kf5 Qxf7+ Nf6 Nh4+ Kg5 g3 Ng4 Qf4+ Kh5 Qxg4+ Kh6 Qf4+ g5 Qf6+ Bg6 Nxg6 Bg7 Qxg7#
-## 5 e4 e5 Nf3 d6 d4 Nc6 d5 Nb4 a3 Na6 Nc3 Be7 b4 Nf6 Bg5 O-O b5 Nc5 Bxf6 Bxf6 Bd3 Qd7 O-O Nxd3 Qxd3 c6 a4 cxd5 Nxd5 Qe6 Nc7 Qg4 Nxa8 Bd7 Nc7 Rc8 Nd5 Qg6 Nxf6+ Qxf6 Rfd1 Re8 Qxd6 Bg4 Qxf6 gxf6 Rd3 Bxf3 Rxf3 Rd8 Rxf6 Kg7 Rf3 Rd2 Rg3+ Kf8 c3 Re2 f3 Rc2 Rg5 f6 Rh5 Kg7 Rd1 Kg6 Rh3 Rxc3 Rd7 Rc1+ Kf2 Rc2+ Kg3 h5 Rxb7 Kg5 Rxa7 h4+ Rxh4 Rxg2+ Kxg2 Kxh4 b6 Kg5 b7 f5 exf5 Kxf5 b8=Q e4 Rf7+ Kg5 Qg8+ Kh6 Rh7#
-## 6                                                                                                                                                                                                                                                                                                                                                                                            e4 c5 Nf3 Qa5 a3
-##   opening.eco                           opening.name opening.ply
-## 1         D10       Slav Defense: Exchange Variation           5
-## 2         B00 Nimzowitsch Defense: Kennedy Variation           4
-## 3         C20  King&#39;s Pawn Game: Leonardis Variation           3
-## 4         D02 Queen&#39;s Pawn Game: Zukertort Variation           3
-## 5         C41                       Philidor Defense           5
-## 6         B27   Sicilian Defense: Mongoose Variation           4</code></pre>
+<div id="cleaning-trivial-variables" class="section level2">
+<h2><span class="header-section-number">3.1</span> Cleaning Trivial Variables</h2>
+<p>The dataset has the following variables.</p>
+<pre><code>##  [1] &quot;id&quot;             &quot;rated&quot;          &quot;created_at&quot;     &quot;last_move_at&quot;  
+##  [5] &quot;turns&quot;          &quot;victory_status&quot; &quot;winner&quot;         &quot;increment_code&quot;
+##  [9] &quot;white_id&quot;       &quot;white_rating&quot;   &quot;black_id&quot;       &quot;black_rating&quot;  
+## [13] &quot;moves&quot;          &quot;opening_eco&quot;    &quot;opening_name&quot;   &quot;opening_ply&quot;</code></pre>
+<p>We wanted to remove <code>id, created_at, last_move_at, increment_code, moves, opening_eco, opening_ply</code> since some of them, like <code>id</code> or <code>increment_code</code> do not have pivotal information for our problems. Or they are providing similar information as other variables, such as <code>opening_eco</code>.</p>
+<p>The rest variables are:</p>
+<pre><code>## [1] &quot;rated&quot;          &quot;turns&quot;          &quot;victory_status&quot; &quot;winner&quot;        
+## [5] &quot;white_id&quot;       &quot;white_rating&quot;   &quot;black_id&quot;       &quot;black_rating&quot;  
+## [9] &quot;opening_name&quot;</code></pre>
+</div>
+<div id="cleaning-rated-status" class="section level2">
+<h2><span class="header-section-number">3.2</span> Cleaning Rated Status</h2>
+<pre><code>## 
+## False FALSE  True  TRUE 
+##  2048  1855  8723  7432</code></pre>
+<p>We changed all the strings to uppercase letter for consistency.</p>
+<pre><code>## 
+## FALSE  TRUE 
+##  3903 16155</code></pre>
+</div>
+<div id="cleaning-turns" class="section level2">
+<h2><span class="header-section-number">3.3</span> Cleaning Turns</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="cleaning-users" class="section level2">
+<h2><span class="header-section-number">3.4</span> Cleaning Users</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="cleaning-opening-names" class="section level2">
+<h2><span class="header-section-number">3.5</span> Cleaning Opening Names</h2>
+<pre><code>## 
+##        Sicilian Defense       Queen&#39;s Pawn Game          French Defense 
+##                     563                     275                     256 
+##               Ruy Lopez        King&#39;s Pawn Game            Italian Game 
+##                     204                     200                     197 
+##         English Opening        Philidor Defense    Scandinavian Defense 
+##                     154                     142                     133 
+##       Caro-Kann Defense       Zukertort Opening             Scotch Game 
+##                     132                      95                      87 
+##       Four Knights Game             Indian Game Queen&#39;s Gambit Declined 
+##                      86                      83                      79 
+##    Van&#39;t Kruijs Opening        Bishop&#39;s Opening          Modern Defense 
+##                      71                      67                      59 
+##            Pirc Defense            Slav Defense 
+##                      52                      51</code></pre>
+</div>
+<div id="head" class="section level2">
+<h2><span class="header-section-number">3.6</span> Head</h2>
+<div style="border: 0px;overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+rated
+</th>
+<th style="text-align:right;">
+turns
+</th>
+<th style="text-align:left;">
+victory_status
+</th>
+<th style="text-align:left;">
+winner
+</th>
+<th style="text-align:left;">
+white_id
+</th>
+<th style="text-align:right;">
+white_rating
+</th>
+<th style="text-align:left;">
+black_id
+</th>
+<th style="text-align:right;">
+black_rating
+</th>
+<th style="text-align:left;">
+opening_name
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+mate
+</td>
+<td style="text-align:left;">
+white
+</td>
+<td style="text-align:left;">
+daniamurashov
+</td>
+<td style="text-align:right;">
+1439
+</td>
+<td style="text-align:left;">
+adivanov2009
+</td>
+<td style="text-align:right;">
+1454
+</td>
+<td style="text-align:left;">
+Queen’s Pawn Game
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+mate
+</td>
+<td style="text-align:left;">
+white
+</td>
+<td style="text-align:left;">
+nik221107
+</td>
+<td style="text-align:right;">
+1523
+</td>
+<td style="text-align:left;">
+adivanov2009
+</td>
+<td style="text-align:right;">
+1469
+</td>
+<td style="text-align:left;">
+Philidor Defense
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:left;">
+mate
+</td>
+<td style="text-align:left;">
+white
+</td>
+<td style="text-align:left;">
+daniel_likes_chess
+</td>
+<td style="text-align:right;">
+1381
+</td>
+<td style="text-align:left;">
+mirco25
+</td>
+<td style="text-align:right;">
+1209
+</td>
+<td style="text-align:left;">
+Scandinavian Defense
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+resign
+</td>
+<td style="text-align:left;">
+black
+</td>
+<td style="text-align:left;">
+daniel_likes_chess
+</td>
+<td style="text-align:right;">
+1381
+</td>
+<td style="text-align:left;">
+roman12342005
+</td>
+<td style="text-align:right;">
+1936
+</td>
+<td style="text-align:left;">
+French Defense
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:left;">
+mate
+</td>
+<td style="text-align:left;">
+white
+</td>
+<td style="text-align:left;">
+shivangithegenius
+</td>
+<td style="text-align:right;">
+1094
+</td>
+<td style="text-align:left;">
+sureka_akshat
+</td>
+<td style="text-align:right;">
+1141
+</td>
+<td style="text-align:left;">
+Four Knights Game
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+resign
+</td>
+<td style="text-align:left;">
+black
+</td>
+<td style="text-align:left;">
+sureka_akshat
+</td>
+<td style="text-align:right;">
+1141
+</td>
+<td style="text-align:left;">
+shivangithegenius
+</td>
+<td style="text-align:right;">
+1094
+</td>
+<td style="text-align:left;">
+Italian Game
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 </div>
 </div>

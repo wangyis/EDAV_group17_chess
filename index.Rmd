@@ -7,3 +7,4 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+Inspired by a popular and realistic new Netflix series The Queen’s Gambit, starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates. 
