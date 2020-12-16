@@ -2,13 +2,21 @@
 
 
 ```{r, include=FALSE}
-games <- read.csv("https://raw.githubusercontent.com/wangyis/EDAV_group17_chess/main/dataset/games.csv")
+clean_games <- read.csv("dataset/clean_games.csv")
 ```
 
-
 ## Check Missing Values
+
+```{r}
+library(mi)
+x <- missing_data.frame(clean_games)
+image(x)
+```
+
+Based on the missing data plot, the dark represents missing value. As the plot shows, there is no dark area so that we don't have to take any actions to deal with this problem.
+
 ```{r}
 table(is.na(games))
 ```
 
-We use `is.na()` to check the missing values in the dataset. As the table shows, there is no missing values in this dataset.
+We use `is.na()` to double-check the missing values in the dataset. As the table shows, there is no missing values in this dataset.

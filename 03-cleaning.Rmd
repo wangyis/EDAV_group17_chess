@@ -26,7 +26,7 @@ games <- games[games$turns >= 10,]
 ```{r}
 tb <- table(c(games$white_id, games$black_id))
 tb <- tb[tb >= 3]
-ggplot(df, aes(x = Freq)) + geom_histogram() + geom_vline(xintercept = 3, color = "red") +
+ggplot(as.data.frame(tb), aes(x = Freq)) + geom_histogram() + geom_vline(xintercept = 3, color = "red") +
   xlab("Number of games each player played")
 
 games <- games[(games$white_id %in% names(tb) & games$black_id %in% names(tb) ),]
@@ -42,6 +42,9 @@ head(sort(table(games$opening_name), decreasing = T), n = 20)
 ## Head
 ```{r}
 head(games)
+```
+```{r}
+write.csv(games, "dataset/clean_games.csv")
 ```
 
 
