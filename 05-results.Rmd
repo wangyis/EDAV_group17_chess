@@ -69,15 +69,15 @@ rankPlayer<-function(df, left, right){
 ```
 
 ```{r}
-rank750<-rankPlayer(clean_games, 750, 1150)
+rank750<-rankPlayer(clean_games, 750, 1149)
 rank750$level = "level 1"
 rank1150<-rankPlayer(clean_games,1150,1549)
 rank1150$level = "level 2"
 rank1550<-rankPlayer(clean_games,1550,1949)
 rank1550$level ="level 3"
-rank1950<-rankPlayer(clean_games,1950, 2350)
+rank1950<-rankPlayer(clean_games,1950, 2349)
 rank1950$level ="level 4"
-rank2350<-rankPlayer(clean_games, 2350,2750)
+rank2350<-rankPlayer(clean_games, 2350,2749)
 rank2350$level ="level 5"
 rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
 write.csv(rank, "dataset/rank.csv")
@@ -176,15 +176,15 @@ ggplot(sicilian, aes(x = white_rating, y = black_rating, color = winner, shape =
 
 ```{r}
 
-sc_rank750 <- rankPlayer(sicilian, 750, 1150)
+sc_rank750 <- rankPlayer(sicilian, 750, 1149)
 sc_rank750$level = "level 1"
 sc_rank1150 <- rankPlayer(sicilian,1150,1549)
 sc_rank1150$level = "level 2"
 sc_rank1550 <- rankPlayer(sicilian,1550,1949)
 sc_rank1550$level ="level 3"
-sc_rank1950 <- rankPlayer(sicilian,1950, 2350)
+sc_rank1950 <- rankPlayer(sicilian,1950, 2349)
 sc_rank1950$level ="level 4"
-sc_rank2350 <- rankPlayer(sicilian, 2350,2750)
+sc_rank2350 <- rankPlayer(sicilian, 2350,2749)
 sc_rank2350$level ="level 5"
 sc_rank<- rbind(sc_rank750, sc_rank1150, sc_rank1550, sc_rank1950, sc_rank2350)
 
