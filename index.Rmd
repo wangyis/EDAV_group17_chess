@@ -7,4 +7,12 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-Inspired by a popular and realistic new Netflix series The Queen’s Gambit, starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates. 
+Inspired by a popular and realistic new Netflix series The Queen’s Gambit, in which the starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates.
+
+History of chess can be traced back to 1500 years, while the predecessor of the game probably originated in India and spread to Persia. When the Arabs conquered Persia, chess was taken up by the Muslim world and subsequently spread to Southern Europe, where it evolved into roughly its current form in the 15th century. 
+
+In the 20th century, chess theory leaped forward greatly. A World Chess Federation (FIDE) was established as well. In 1997, a computer first beats a chess world champion in the Deep Blue versus Garry Kasparov match, and since then, computer analysis has contributed to much of the development in chess theory and has become an important part of preparation in professional human chess. Online chess gaming, which was original in the mid 1990s, became popular in 21st century.
+
+A chess opening, or the “opening move”, is the group of initial moves a game and it has been given names such as Sicilian Defense or Grob’s Attack. There are dozens of different openings which are varied from quiet positional play, such as Reti Opening, to very aggressive move, the Latvian Gambit. 
+
+Chess opening is recommended for anyone and In this study, we will analyze various chess openings or any other factors that may affect game result. 
