@@ -35,24 +35,40 @@ table(games$rated)
 ```
 
 ## Cleaning Turns
+
 ```{r}
 library(ggplot2)
 ggplot(data = games, aes(x = turns)) + geom_histogram(bins = 50) +
   geom_vline(xintercept = 10, color = "red")
 
+
 games <- games[games$turns >= 10,]
 ```
 
+In this chess dataset, we assume that games which only have few turns are not meaningful since it is not usual to reach the final status by only few turns in a chess game.
+
+As the plot shows, the majority of the games have turns over 10 so that we just directly deleted games whose number of turns are under 10.
 
 ## Cleaning Users
+
 ```{r}
 tb <- table(c(games$white_id, games$black_id))
-tb <- tb[tb >= 3]
 ggplot(as.data.frame(tb), aes(x = Freq)) + geom_histogram() + geom_vline(xintercept = 3, color = "red") +
   xlab("Number of games each player played")
-
-games <- games[(games$white_id %in% names(tb) & games$black_id %in% names(tb) ),]
 ```
+
+
+```{r}
+loop = TRUE
+while(loop == TRUE){
+  tb <- table(c(games$white_id, games$black_id))
+  id <- names(tb[tb >= 3])
+  games <- games[(games$white_id %in% id & games$black_id %in% id ),]
+  if (names(table(tb >= 3))[1] != 'FALSE') loop = FALSE
+}
+```
+
+For those players who only have played few games, their data may be outliers or cannot provide useful information for our analysis. Therefore, we keep the games played by users who only had played the chess game at least 3 times. 
 
 ## Cleaning Opening Names
 ```{r}
@@ -61,7 +77,16 @@ games$opening_name <- str_split_fixed(games$opening_name, " [#|]", n = 2)[,1]
 head(sort(table(games$opening_name), decreasing = T), n = 20)
 ```
 
-## Head
+The original opening names are really messy since some openings have very detailed explanation. By doing related research, we decided to use the more general definition of each opening for each game. This tidy version is more operable for visualization and conclusion.
+
+## Cleaned Dataset
+
+```{r}
+dim(games)
+```
+
+The cleaned dataset have 3393 observations and 9 variables.
+
 ```{r}
 library(kableExtra)
 kable(head(games)) %>% kable_styling() %>%
