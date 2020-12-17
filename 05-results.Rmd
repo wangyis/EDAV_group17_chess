@@ -83,7 +83,7 @@ rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
 ```
 ```{r}
 ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
-  geom_boxplot(alpha = 0.3, size = 1) + 
+  geom_boxplot(alpha = 0.3, size = 0.75) + 
   ggtitle("Distribution of winning rate in each level") +
   labs(x = "Level", y = "Wining Rate", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
   theme_ipsum() +
