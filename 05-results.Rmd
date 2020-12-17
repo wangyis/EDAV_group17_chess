@@ -1,6 +1,97 @@
 # Results
 
 ```{r, include=FALSE}
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(alr4)
+library(dplyr)
+library(hrbrthemes)
+```
+
+```{r}
+# get clean dataset
 clean_games <- read.csv("dataset/clean_games.csv")
 ```
+Top 10 players in each ranks
+
+```{r}
+getMatchNum <- function(df, left, right){
+  tempW <- df %>%
+  group_by(white_id) %>% 
+  filter(white_rating >= left & white_rating <right) %>% summarize(n = n())
+  
+  tempB <- df %>%
+  group_by(black_id) %>% 
+  filter(black_rating >= left & black_rating <right) %>% summarize(n = n())
+  
+  colnames(tempW)<- c("id", "match_num")
+  colnames(tempB)<-c("id", "match_num")
+  temp1<-bind_rows(tempW, tempB) %>%
+    group_by(id) %>%
+    summarise_all(sum)
+  temp1<-filter(temp1, match_num>2)
+  return(temp1)
+}
+```
+
+
+```{r}
+getWinNum <- function(df, left,right){
+  tempW <- df %>%
+    group_by(white_id) %>% 
+    filter(white_rating >= left & white_rating <right & winner == "white") %>% summarize(n = n())
+  
+  tempB <- df %>%
+    group_by(black_id) %>% 
+    filter(black_rating >= left & black_rating <right & winner == "black") %>% summarize(n = n())
+  
+  colnames(tempW)<- c("id", "win_num")
+  colnames(tempB)<-c("id", "win_num")
+  temp2<-bind_rows(tempW, tempB) %>%
+    group_by(id) %>%
+    summarise_all(sum)
+  return(temp2)
+}
+```
+
+```{r}
+rankPlayer<-function(df, left, right){
+  temp1<-getMatchNum(df, left,right)
+  temp2<-getWinNum(df,left,right)
+  temp<-merge(temp1, temp2, by = "id", all.x = TRUE)
+  
+  temp[is.na(temp)]<-0
+  temp$winning_rate = temp$win_num/temp$match_num
+  temp<-temp[order(-temp$winning_rate),]
+  return(temp)
+}
+```
+
+```{r}
+rank750<-rankPlayer(clean_games, 750, 1150)
+rank750$level = "1"
+rank1150<-rankPlayer(clean_games,1150,1549)
+rank1150$level = "2"
+rank1550<-rankPlayer(clean_games,1550,1949)
+rank1550$level ="3"
+rank1950<-rankPlayer(clean_games,1950, 2350)
+rank1950$level ="4"
+rank2350<-rankPlayer(clean_games, 2350,2750)
+rank2350$level ="5"
+rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
+```
+```{r}
+ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
+  geom_boxplot(alpha = 0.3, size = 1) + 
+  ggtitle("Distribution of winning rate in each level") +
+  labs(x = "Level", y = "Wining Rate", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
+  theme_ipsum() +
+  theme(legend.position = "none",
+    plot.title = element_text(face = "bold"), 
+        plot.caption = element_text(color = "grey68")) +
+  scale_fill_brewer(palette = "Blues")
+```
+
+
 
