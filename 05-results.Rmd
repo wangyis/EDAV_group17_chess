@@ -70,22 +70,22 @@ rankPlayer<-function(df, left, right){
 
 ```{r}
 rank750<-rankPlayer(clean_games, 750, 1150)
-rank750$level = "1"
+rank750$level = "level 1"
 rank1150<-rankPlayer(clean_games,1150,1549)
-rank1150$level = "2"
+rank1150$level = "level 2"
 rank1550<-rankPlayer(clean_games,1550,1949)
-rank1550$level ="3"
+rank1550$level ="level 3"
 rank1950<-rankPlayer(clean_games,1950, 2350)
-rank1950$level ="4"
+rank1950$level ="level 4"
 rank2350<-rankPlayer(clean_games, 2350,2750)
-rank2350$level ="5"
+rank2350$level ="level 5"
 rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
 ```
 ```{r}
 ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
   geom_boxplot(alpha = 0.3, size = 0.75) + 
   ggtitle("Distribution of winning rate in each level") +
-  labs(x = "Level", y = "Wining Rate", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
+  labs(x = "", y = "Wining Rate", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
   theme_bw() +
   theme(legend.position = "none",
     plot.title = element_text(face = "bold"), 
@@ -98,7 +98,7 @@ ggplot(rank, aes(x = factor(level), fill = level)) +
   geom_text(stat = 'count', aes(label = ..count..), vjust = -0.7) +
   ylim(0,650) +
   ggtitle("Number of players in each level") +
-  labs(x = "Level", y = "Number of Players", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
+  labs(x = "", y = "Number of Players", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
   theme_bw() +
   theme(legend.position = "none",
     plot.title = element_text(face = "bold"), 
@@ -106,16 +106,20 @@ ggplot(rank, aes(x = factor(level), fill = level)) +
   scale_fill_brewer(palette = "Blues")
 ```
 ```{r}
-top15 <-rbind(rank750[order(-rank750$winning_rate),][1:15,],
-              rank1150[order(-rank1150$winning_rate),][1:15,],
-              rank1550[order(-rank1550$winning_rate),][1:15,],
-              rank1950[order(-rank1950$winning_rate),][1:15,],
-              rank2350[order(-rank2350$winning_rate),][1:15,])
+top15 <-rbind(rank750[order(-rank750$winning_rate,-rank750$match_num),][1:15,],
+              rank1150[order(-rank1150$winning_rate,-rank1150$match_num),][1:15,],
+              rank1550[order(-rank1550$winning_rate,-rank1550$match_num),][1:15,],
+              rank1950[order(-rank1950$winning_rate,-rank1950$match_num),][1:15,],
+              rank2350[order(-rank2350$winning_rate,-rank2350$match_num),][1:15,])
 
 ggplot(top15, aes(x = winning_rate, reorder(id, winning_rate))) +
   geom_point(size = 1) + 
-  facet_wrap(~level, scales = "free", ncol = 3,
-             )
+  labs(x = "winning rate", y = "id", title = "Top 15 players in each level", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
+  theme_bw() +
+  facet_wrap(~level, scales = "free_y", ncol = 3, ) +
+  theme(legend.position = "none",
+    plot.title = element_text(face = "bold"), 
+        plot.caption = element_text(color = "grey68"))
 ```
 
 ```{r}
@@ -157,19 +161,34 @@ ggplot(sicilian, aes(x = white_rating, y = black_rating, color = winner, shape =
   labs(y = "Black Rating", x = "White Rating", color = "Winner", shape = "Winner",
        title = "Winner & Draw Rating with Sicilian Defense Opening")
 ```
+```{r}
+openings <- clean_games %>%
+  group_by(opening_name) %>% summarize(n = n())
+  
+ggplot(openings, aes(n, reorder(opening_name, n)) +
+  geom_bar() +
+  geom_text(stat='count', aes(label=..count..), hjust = -0.5) +
+  coord_flip() +
+  labs(x = "winning rate", y = "id", title = "Top 15 players in each level", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
+  theme_bw() +
+  theme(legend.position = "none",
+  plot.title = element_text(face = "bold"), 
+      plot.caption = element_text(color = "grey68"))
+
+```
 
 ```{r}
 
 sc_rank750 <- rankPlayer(sicilian, 750, 1150)
-sc_rank750$level = "1"
+sc_rank750$level = "level 1"
 sc_rank1150 <- rankPlayer(sicilian,1150,1549)
-sc_rank1150$level = "2"
+sc_rank1150$level = "level 2"
 sc_rank1550 <- rankPlayer(sicilian,1550,1949)
-sc_rank1550$level ="3"
+sc_rank1550$level ="level 3"
 sc_rank1950 <- rankPlayer(sicilian,1950, 2350)
-sc_rank1950$level ="4"
+sc_rank1950$level ="level 4"
 sc_rank2350 <- rankPlayer(sicilian, 2350,2750)
-sc_rank2350$level ="5"
+sc_rank2350$level ="level 5"
 sc_rank<- rbind(sc_rank750, sc_rank1150, sc_rank1550, sc_rank1950, sc_rank2350)
 
 ggplot(sc_rank, aes(x = level, y = winning_rate, fill = level)) +
