@@ -121,6 +121,14 @@ ggplot(top15, aes(x = winning_rate, reorder(id, winning_rate))) +
     plot.title = element_text(face = "bold"), 
         plot.caption = element_text(color = "grey68"))
 ```
+```{r}
+openings <- clean_games %>%
+  group_by(opening_name) %>% 
+  summarize(counts = n())
+openings<- openings[order(-openings$counts),]
+head(openings, 20)
+
+```
 
 ```{r}
 opening_win <- clean_games %>% group_by(winner) %>% count(opening_name, sort = TRUE)
@@ -155,27 +163,15 @@ ggplot(sicilian, aes(x = white_rating, y = black_rating, color = winner, shape =
     legend.position = "bottom",
     plot.title = element_text(hjust = 0.5, face = "bold", size = 15),
     axis.text = element_text(size = 8),
-    axis.title = element_text(size = 8)
+    axis.title = element_text(size = 8),
+    plot.caption = element_text(color = "grey68")
     )+
   scale_color_brewer(palette = "Dark2")+
   labs(y = "Black Rating", x = "White Rating", color = "Winner", shape = "Winner",
-       title = "Winner & Draw Rating with Sicilian Defense Opening")
+       title = "Winner & Draw Rating with Sicilian Defense Opening",  
+       caption = "Source: https://www.kaggle.com/datasnaek/chess")
 ```
-```{r}
-openings <- clean_games %>%
-  group_by(opening_name) %>% summarize(n = n())
-  
-ggplot(openings, aes(n, reorder(opening_name, n)) +
-  geom_bar() +
-  geom_text(stat='count', aes(label=..count..), hjust = -0.5) +
-  coord_flip() +
-  labs(x = "winning rate", y = "id", title = "Top 15 players in each level", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
-  theme_bw() +
-  theme(legend.position = "none",
-  plot.title = element_text(face = "bold"), 
-      plot.caption = element_text(color = "grey68"))
 
-```
 
 ```{r}
 
@@ -193,7 +189,7 @@ sc_rank<- rbind(sc_rank750, sc_rank1150, sc_rank1550, sc_rank1950, sc_rank2350)
 
 ggplot(sc_rank, aes(x = level, y = winning_rate, fill = level)) +
   geom_boxplot(alpha = 0.3, size = 1) + 
-  ggtitle("Distribution of winning rate in each level") +
+  ggtitle("Sicilian Defence winning rate in each level") +
   labs(x = "Level", y = "Wining Rate", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
   theme_ipsum() +
   theme(legend.position = "none",
