@@ -24,7 +24,7 @@
 <meta name="author" content="Hanlin Tong, Wendy Qian, Yishi Wang" />
 
 
-<meta name="date" content="2020-12-15" />
+<meta name="date" content="2020-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -84,7 +84,7 @@
 <li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-turns"><i class="fa fa-check"></i><b>3.3</b> Cleaning Turns</a></li>
 <li class="chapter" data-level="3.4" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-users"><i class="fa fa-check"></i><b>3.4</b> Cleaning Users</a></li>
 <li class="chapter" data-level="3.5" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-opening-names"><i class="fa fa-check"></i><b>3.5</b> Cleaning Opening Names</a></li>
-<li class="chapter" data-level="3.6" data-path="data-transformation.html"><a href="data-transformation.html#head"><i class="fa fa-check"></i><b>3.6</b> Head</a></li>
+<li class="chapter" data-level="3.6" data-path="data-transformation.html"><a href="data-transformation.html#cleaned-dataset"><i class="fa fa-check"></i><b>3.6</b> Cleaned Dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
@@ -139,31 +139,37 @@
 <div id="cleaning-turns" class="section level2">
 <h2><span class="header-section-number">3.3</span> Cleaning Turns</h2>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>In this chess dataset, we assume that games which only have few turns are not meaningful since it is not usual to reach the final status by only few turns in a chess game.</p>
+<p>As the plot shows, the majority of the games have turns over 10 so that we just directly deleted games whose number of turns are under 10.</p>
 </div>
 <div id="cleaning-users" class="section level2">
 <h2><span class="header-section-number">3.4</span> Cleaning Users</h2>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>For those players who only have played few games, their data may be outliers or cannot provide useful information for our analysis. Therefore, we keep the games played by users who only had played the chess game at least 3 times.</p>
 </div>
 <div id="cleaning-opening-names" class="section level2">
 <h2><span class="header-section-number">3.5</span> Cleaning Opening Names</h2>
 <pre><code>## 
 ##        Sicilian Defense       Queen&#39;s Pawn Game          French Defense 
-##                     563                     275                     256 
+##                     452                     221                     198 
 ##               Ruy Lopez        King&#39;s Pawn Game            Italian Game 
-##                     204                     200                     197 
-##         English Opening        Philidor Defense    Scandinavian Defense 
-##                     154                     142                     133 
-##       Caro-Kann Defense       Zukertort Opening             Scotch Game 
-##                     132                      95                      87 
-##       Four Knights Game             Indian Game Queen&#39;s Gambit Declined 
-##                      86                      83                      79 
+##                     173                     170                     154 
+##         English Opening        Philidor Defense       Caro-Kann Defense 
+##                     138                     115                     104 
+##    Scandinavian Defense       Zukertort Opening       Four Knights Game 
+##                      97                      80                      71 
+##             Scotch Game Queen&#39;s Gambit Declined             Indian Game 
+##                      68                      66                      61 
 ##    Van&#39;t Kruijs Opening        Bishop&#39;s Opening          Modern Defense 
-##                      71                      67                      59 
-##            Pirc Defense            Slav Defense 
-##                      52                      51</code></pre>
+##                      56                      53                      51 
+##            Slav Defense       Hungarian Opening 
+##                      46                      37</code></pre>
+<p>The original opening names are really messy since some openings have very detailed explanation. By doing related research, we decided to use the more general definition of each opening for each game. This tidy version is more operable for visualization and conclusion.</p>
 </div>
-<div id="head" class="section level2">
-<h2><span class="header-section-number">3.6</span> Head</h2>
+<div id="cleaned-dataset" class="section level2">
+<h2><span class="header-section-number">3.6</span> Cleaned Dataset</h2>
+<pre><code>## [1] 3393    9</code></pre>
+<p>The cleaned dataset have 3393 observations and 9 variables.</p>
 <div style="border: 0px;overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -266,70 +272,6 @@ Philidor Defense
 </tr>
 <tr>
 <td style="text-align:left;">
-10
-</td>
-<td style="text-align:left;">
-TRUE
-</td>
-<td style="text-align:right;">
-119
-</td>
-<td style="text-align:left;">
-mate
-</td>
-<td style="text-align:left;">
-white
-</td>
-<td style="text-align:left;">
-daniel_likes_chess
-</td>
-<td style="text-align:right;">
-1381
-</td>
-<td style="text-align:left;">
-mirco25
-</td>
-<td style="text-align:right;">
-1209
-</td>
-<td style="text-align:left;">
-Scandinavian Defense
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-FALSE
-</td>
-<td style="text-align:right;">
-60
-</td>
-<td style="text-align:left;">
-resign
-</td>
-<td style="text-align:left;">
-black
-</td>
-<td style="text-align:left;">
-daniel_likes_chess
-</td>
-<td style="text-align:right;">
-1381
-</td>
-<td style="text-align:left;">
-roman12342005
-</td>
-<td style="text-align:right;">
-1936
-</td>
-<td style="text-align:left;">
-French Defense
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 15
 </td>
 <td style="text-align:left;">
@@ -390,6 +332,70 @@ shivangithegenius
 </td>
 <td style="text-align:left;">
 Italian Game
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:left;">
+resign
+</td>
+<td style="text-align:left;">
+black
+</td>
+<td style="text-align:left;">
+shivangithegenius
+</td>
+<td style="text-align:right;">
+1094
+</td>
+<td style="text-align:left;">
+sureka_akshat
+</td>
+<td style="text-align:right;">
+1141
+</td>
+<td style="text-align:left;">
+Four Knights Game
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+mate
+</td>
+<td style="text-align:left;">
+black
+</td>
+<td style="text-align:left;">
+sureka_akshat
+</td>
+<td style="text-align:right;">
+1141
+</td>
+<td style="text-align:left;">
+shivangithegenius
+</td>
+<td style="text-align:right;">
+1094
+</td>
+<td style="text-align:left;">
+Four Knights Game
 </td>
 </tr>
 </tbody>
