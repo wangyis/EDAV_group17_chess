@@ -14,7 +14,7 @@ library("jsonlite")
 turn the winning rate distribution in each rating graph into d3
 ```{r,echo=FALSE, results="asis"}
 # get clean dataset
-rank <- read.csv("dataset/rank.csv")
+data <- read.csv("dataset/rank.csv")
 cat(
   paste(
   '<script>
@@ -28,9 +28,9 @@ cat(
 
 
 <script>
-data = [1,2,3,8,7,4,9,8,7,3,4,5,2,1,9,7,8,4,0,2,3,8,7,6];
-min = d3.min(data);
-max = d3.max(data);
+
+min = 0.0;
+max = 1.0;
 domain = [min,max];
 
 var margin = { top: 30, right: 30, bottom: 30, left: 50 },
@@ -50,7 +50,7 @@ var histogram = d3
   .thresholds(x.ticks(Nbin)); // then the numbers of bins
  
 // And apply this function to data to get the bins
-var bins = histogram(data);
+var bins = histogram(data).value(fucntion(d){return d.winning_rate})
 
 var svg = d3
   .select("body")
