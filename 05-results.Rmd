@@ -156,7 +156,9 @@ ggplot(sicilian, aes(x = white_rating, y = black_rating, color = winner, shape =
   scale_color_brewer(palette = "Dark2")+
   labs(y = "Black Rating", x = "White Rating", color = "Winner", shape = "Winner",
        title = "Winner & Draw Rating with Sicilian Defense Opening")
+```
 
+```{r}
 
 sc_rank750 <- rankPlayer(sicilian, 750, 1150)
 sc_rank750$level = "1"
