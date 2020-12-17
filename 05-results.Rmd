@@ -86,11 +86,14 @@ ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
   geom_boxplot(alpha = 0.3, size = 0.75) + 
   ggtitle("Distribution of winning rate in each level") +
   labs(x = "Level", y = "Wining Rate", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
-  theme_ipsum() +
+  theme_bw() +
   theme(legend.position = "none",
     plot.title = element_text(face = "bold"), 
         plot.caption = element_text(color = "grey68")) +
   scale_fill_brewer(palette = "Blues")
+```
+```{r}
+ggplot(rank, aes(group))
 ```
 
 
