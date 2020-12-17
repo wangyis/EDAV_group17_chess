@@ -23,145 +23,66 @@ cat(
   , sep="")
 )
 ```
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<div id="plot"></div>
+<script src="https://d3js.org/d3.v6.js"></script>
+<div id="my_dataviz"></div>
+
 <p>
   <label># bins</label>
-  <input type="number" min="1" max="20" step="3" value="6" id="nBin">
+  <input type="number" min="1" max="100" step="30" value="20" id="nBin">
 </p>
 
 <script>
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
-// Create svg and initial bars
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
-  var w = 500;
-  var h = 400;
-  var margin = {top: 25, right: 0, bottom: 25, left: 25};
-  var innerWidth = w - margin.left - margin.right;
-  var innerHeight = h - margin.top - margin.bottom;
-  var dur = 500;
+// get the data
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", function(data) {
 
-  var svg = d3.select("body")
-    .append("svg")
-      .attr("width", w)
-      .attr("height", h);
-
-  svg.append("rect")
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("width", w)
-      .attr("height", h)
-      .attr("fill", "lightblue");
-
-  var bardata = [300, 100, 150, 220, 70, 270]
-      .map((value, key) => ({key, value}));
-  var xScale = d3.scaleBand()
-      .domain(d3.range(bardata.length))
-      .range([0, innerWidth])
-      .paddingInner(.1);
-
-  var yScale = d3.scaleLinear()
-      .domain([0, d3.max(bardata, d => d.value)])
-      .range([innerHeight, 0]);
-
-  var xAxis = d3.axisBottom()
-      .scale(xScale);
-
-  var yAxis = d3.axisLeft()
-      .scale(yScale);
-
-  var bars = svg.append("g")
-      .attr("id", "plot")
-      .attr("transform", `translate (${margin.left}, ${margin.top})`)
-    .selectAll("rect")
-      .data(bardata, d => d.key);
-
-  bars.enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", (d, i) => xScale(i))
-      .attr("y", d => yScale(d.value))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => innerHeight - yScale(d.value))
-      .attr("fill","blue");
-
+  // X axis: scale and draw:
+  var x = d3.scaleLinear()
+      .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .range([0, width]);
   svg.append("g")
-      .attr("class", "xAxis")
-      .attr("transform", `translate (${margin.left}, ${h - margin.bottom})`)
-      .call(xAxis);
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
+  // set the parameters for the histogram
+  var histogram = d3.histogram()
+      .value(function(d) { return d.price; })   // I need to give the vector of value
+      .domain(x.domain())  // then the domain of the graphic
+      .thresholds(x.ticks(70)); // then the numbers of bins
+
+  // And apply this function to data to get the bins
+  var bins = histogram(data);
+
+  // Y axis: scale and draw:
+  var y = d3.scaleLinear()
+      .range([height, 0]);
+      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
   svg.append("g")
-      .attr("class", "yAxis")
-      .attr("transform", `translate (${margin.left}, ${margin.top})`)
-      .call(yAxis);
+      .call(d3.axisLeft(y));
 
-// General Update Pattern
+  // append the bar rectangles to the svg element
+  svg.selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y(d.length); })
+        .style("fill", "#69b3a2")
 
-  function update(data, exitpos) {
-
-    xScale.domain(d3.range(data.length));
-
-    yScale.domain([0, d3.max(data, d => d.value)]);
-
-    var bars = svg.select("#plot")
-         .selectAll("rect")
-        .data(data, d => d.key);
-
-    bars.enter().append("rect")
-        .attr("x", w)
-        .attr("y", d => yScale(d.value))
-        .attr("width", xScale.bandwidth())
-        .attr("height", d => innerHeight - yScale(d.value))
-        .attr("fill", "blue")
-      .merge(bars)
-        .transition()
-        .duration(dur)
-        .ease(d3.easeLinear)
-        .attr("x", (d, i) => xScale(i))
-        .attr("y", d => yScale(d.value))
-        .attr("width", xScale.bandwidth())
-        .attr("height", d => innerHeight - yScale(d.value))
-
-    bars.exit()
-      .transition()
-        .duration(dur)
-        .attr("x", exitpos)
-        .remove();
-
-    svg.select(".xAxis")
-      .transition()
-        .duration(dur)
-        .ease(d3.easeLinear)
-        .call(xAxis);
-
-    svg.select(".yAxis")
-      .transition()
-        .duration(dur)
-        .ease(d3.easeLinear)
-        .call(yAxis);
-
-  }
-
-      d3.selectAll("p")
-        .on("click", function () {
-
-      var paraID = d3.select(this).attr("id");
-
-      if (paraID == "add") {
-          var newvalue = Math.floor(Math.random()*400);
-          if (bardata.length == 0) {var newkey = 0;}
-          else {var newkey = bardata[bardata.length-1].key + 1;}
-          bardata.push({key: newkey, value: newvalue } );
-      } else if (paraID == "remove_left") {
-          bardata.shift();
-          var exitpos = -xScale.bandwidth();
-      } else {
-          bardata.pop();
-          var exitpos = w;
-      };
-
-      update(bardata, exitpos);
-
-    });
-
-    
+});
 </script>
