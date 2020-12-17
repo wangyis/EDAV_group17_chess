@@ -80,6 +80,7 @@ rank1950$level ="level 4"
 rank2350<-rankPlayer(clean_games, 2350,2750)
 rank2350$level ="level 5"
 rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
+write.csv(rank, "dataset/rank.csv")
 ```
 ```{r}
 ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
@@ -197,4 +198,3 @@ ggplot(sc_rank, aes(x = level, y = winning_rate, fill = level)) +
         plot.caption = element_text(color = "grey68")) +
   scale_fill_brewer(palette = "Blues")
 ```
-
