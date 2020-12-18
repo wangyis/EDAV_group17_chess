@@ -1,2 +1,5 @@
 # Conclusion
-
+Though it has many variations, the Sicilian Defense has its limitations. 
+As an old chess opening, the Sicilian Defense was well-known and was studied to chess players. They were proficient to either play it or to against it. Thus, based on the 20000+ games we had analyzed, white players had approximately 48% chance winning using the Sicilian Defense and the black players had approximately 52% chance winning. 
+One limitation of this study was that the dataset size was too small. Not enough games were analyzed, especially in low levels and high levels. Thus, patterns discovered in both high and lower levels were biased and this issue can be fixed in the future study by collecting more game data. 
+In future study, one can continue to study the top 20 frequency moves, the average number of moves in each chess openings or the relationship between number of turns and victory status. 

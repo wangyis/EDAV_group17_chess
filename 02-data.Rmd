@@ -3,6 +3,7 @@
 ## About Dataset
 
 Hanlin Tong was responsible for collecting the data and the chess games dataset studied in this project was collected from Kaggle.com.
+
 link：https://www.kaggle.com/datasnaek/chess
 
 The publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server.
