@@ -51,8 +51,6 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -71,7 +69,7 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">Chess Analysis</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
@@ -138,13 +136,13 @@
 </div>
 <div id="cleaning-turns" class="section level2">
 <h2><span class="header-section-number">3.3</span> Cleaning Turns</h2>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>In this chess dataset, we assume that games which only have few turns are not meaningful since it is not usual to reach the final status by only few turns in a chess game.</p>
 <p>As the plot shows, the majority of the games have turns over 10 so that we just directly deleted games whose number of turns are under 10.</p>
 </div>
 <div id="cleaning-users" class="section level2">
 <h2><span class="header-section-number">3.4</span> Cleaning Users</h2>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>For those players who only have played few games, their data may be outliers or cannot provide useful information for our analysis. Therefore, we keep the games played by users who only had played the chess game at least 3 times.</p>
 </div>
 <div id="cleaning-opening-names" class="section level2">
