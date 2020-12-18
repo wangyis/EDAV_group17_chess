@@ -1,5 +1,5 @@
 --- 
-title: "EDVA Final Project - Chess Analysis"
+title: "EDAV Final Project - Chess Analysis"
 author: "Hanlin Tong, Wendy Qian, Yishi Wang"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
