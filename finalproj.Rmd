@@ -1,0 +1,312 @@
+--- 
+title: "Final Project Draft"
+author: "Hanlin Tong, Wendy Qian, Yishi Wang"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+--- 
+title: "Final Project Draft"
+author: "Hanlin Tong, Wendy Qian, Yishi Wang"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Introduction
+
+Inspired by recent Netflix series "The Queen’s Gambit", which the starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we were interested in what strategies chess players used in their games. 
+
+History of chess can be traced back to 1500 years, while the predecessor of the game probably originated in India and spread to Persia. When the Arabs conquered Persia, chess was taken up by the Muslim world and subsequently spread to Southern Europe, where it evolved into roughly its current form in the 15th century. In the 20th century, chess theory leaped forward greatly. A World Chess Federation (FIDE) was established as well. In 1997, a computer first beats a chess world champion in the Deep Blue versus Garry Kasparov match, and since then, computer analysis has contributed to much of the development in chess theory and has become an important part of preparation in professional human chess. Online chess gaming, which was original in the mid 1990s, became popular in 21st century.
+
+Many factors affected players' win rates but openings played vital parts in it. A chess opening, or the “opening move”, is the group of initial moves a game and it has been given names such as French Defense or Grob’s Attack. There are dozens of different openings which are varied from quiet positional play, such as Reti Opening, to very aggressive move, the Latvian Gambit. Chess opening is recommended for any chess player. In this study, we will analyze various chess openings and their effects on winning probabilities. Meanwhile, "the Sicilian Defense", as a chess opening frequently mentioned in the show "The Queen's Gambit", will be particularly studied its effectiveness among games played by different skill levels players. 
+
+<!--chapter:end:index.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Data sources
+
+## About Dataset
+
+Hanlin Tong was responsible for collecting the data and the chess games dataset studied in this project was collected from Kaggle.com.
+
+link：https://www.kaggle.com/datasnaek/chess
+
+The publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server.
+
+This dataset is credible since i) it includes metadata, such as subtitle, tags, overview description and cover image, ii) it has file descriptions and used appropriate file formats. It is also licensed by CC0 1.0 Universal Public Domain Dedication, and iii) it has a public kernel and task. Combined, it achieved a total usability score of 8.2. 
+
+Variables included but not limited in this study are:
+• Game ID
+• Rated (True / False)
+• Start Time
+• End Time
+• Number of Turns
+• Victory Status (Resign / Mate)
+• Winner (White / Black)
+• Time Increment: An amount of time added to the clock after each move is made.
+• Players Rating Number: Numbers represent goodness of players. Better players have higher scores which are calculated by the Glicko-2 rating method.
+• All Moves in Standard Chess Notation: Notations that recorded the moves or the position of pieces on a chessboard by algebraic chess notation.
+• Opening Name: A list of names of chess openings which refers to the initial moves of a chess game.
+• Opening Ply: Number of moves in the opening phase.
+• Opening Eco: Standardized code for chess opening names.
+No major problems or issues were found in this dataset, despite it is a three-year-old dataset, lots of information were contained within a single chess game. While exploring dataset, an interesting observation was captured. To against King’s Gambit players (a standard offensive opening), the Sicilian Defense strategy (a standard defensive opening) were used commonly among players. And we shall discuss its effect on winning rates in greater details following.
+
+<!--chapter:end:02-data.Rmd-->
+
+
+# Data transformation
+
+Placeholder
+
+
+## Cleaning Trivial Variables
+## Cleaning Rated Status
+## Cleaning Turns
+## Cleaning Users
+## Cleaning Opening Names
+## Cleaned Dataset
+
+<!--chapter:end:03-cleaning.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Missing values
+
+```{r, include=FALSE}
+clean_games <- read.csv("dataset/clean_games.csv")
+```
+
+## Check Missing Values
+
+```{r}
+library(mi)
+x <- missing_data.frame(clean_games)
+image(x)
+```
+
+Based on the missing data plot, the dark represents missing value. As the plot shows, there is no dark area so that we don't have to take any actions to deal with this problem.
+
+```{r}
+table(is.na(clean_games))
+```
+
+We use `is.na()` to double-check the missing values in the dataset. As the table shows, there is no missing values in this dataset.
+
+<!--chapter:end:04-missing.Rmd-->
+
+
+# Results
+
+Placeholder
+
+
+
+<!--chapter:end:05-results.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Interactive component
+
+
+```{r, include=FALSE}
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(alr4)
+library(dplyr)
+library(hrbrthemes)
+library("jsonlite")
+```
+
+turn the winning rate distribution in each rating graph into d3
+```{r vectors-to-json, echo=FALSE, results="asis"}
+temp <- read.csv("dataset/rank.csv")
+cat(
+  paste(
+  '<script>
+    var rankjs = ',toJSON(temp),';
+  </script>'
+  , sep="")
+)
+```
+<div class="slidecontainer">
+  <input type="range" min="1" max="5" value="3" class="slider" id="myRange">
+  <p>Winning rates distribution on level <span id="demo"></span></p>
+</div>
+
+
+<script src="https://d3js.org/d3.v6.js"></script>
+<div id="my_dataviz"></div>
+
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+var w = 500;
+var h = 400;
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = w - margin.left - margin.right,
+    height = h - margin.top - margin.bottom;
+var innerWidth = w - margin.left - margin.right;
+var innerHeight = h - margin.top - margin.bottom;
+
+// set the dimensions and margins of the graph
+
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", w)
+    .attr("height", h)
+
+svg.append("rect")
+   .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", w)
+        .attr("height", h)
+        .attr("fill", "white");
+
+// X axis: scale and draw:
+var xScale = d3.scaleLinear()
+  .domain([0, 1]) 
+  .range([0, width]);
+
+
+
+var xAxis = d3.axisBottom()
+  .scale(xScale);
+
+var yAxis = d3.axisLeft()
+  .scale(yScale);
+
+var histogram = d3.histogram()
+  .value(function(d) { return d.winning_rate; })   // I need to give the vector of value // then the domain of the graphic
+  .domain(xScale.domain())
+  .thresholds(xScale.ticks(20)); // then the numbers of bins
+// get the data
+var bins = histogram(rankjs.filter(element => element.level == "level 3"));
+var yScale = d3.scaleLinear()
+  .domain([0, d3.max(bins)])
+  .range([innerHeight, 0])
+
+
+var bars = svg.append("g")
+        .attr("id", "plot")
+        .attr("transform", `translate (${margin.left}, ${margin.top})`)
+        .selectAll("rect")
+        .data(bins);
+
+    bars.enter().append("rect")
+        .attr("x", (d, i) => xScale(i))
+        .attr("y", d => yScale(d))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => innerHeight - yScale(d))
+        .attr("fill", "#69b3a2");
+
+svg.append("g")
+        .attr("class", "xAxis")
+        .attr("transform", `translate (${margin.left}, ${h - margin.bottom})`)
+        .call(xAxis);
+
+svg.append("g")
+        .attr("class", "yAxis")
+        .attr("transform", `translate (${margin.left}, ${margin.top})`)
+        .call(yAxis);
+
+d3.select(".slidecontainer").select("#myRange")
+  .on("click", function () {
+    var slider = document.getElementById("myRange");
+    if(slider.value == 1){ plot(rankjs, "level 1", 5)}
+    else if(slider.value == 5){plot(rankjs, "level 5", 5)}
+    else (plot(rankjs, "level "+slider.value,20))
+})
+
+var plot = function(data, tmplevel, nbin) {
+    xScale.domain(d3.range(data.length));
+
+    yScale.domain([0, d3.max(data)]);
+
+  // And apply this function to data to get the bins
+  var bars = histogram(data.filter(element => element.level == tmplevel));
+
+   bars.enter()
+          .append("rect")
+            .attr("x", w)
+            .attr("y", d => yScale(d))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => innerHeight - yScale(d))
+            .attr("fill", "#69b3a2")
+          .merge(bars)
+            .transition()
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .attr("x", (d, i) => xScale(i))
+            .attr("y", d => yScale(d))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => innerHeight - yScale(d))
+  
+  bars.exit().remove();
+  // Y axis: scale and draw:
+  svg.select(".xAxis")
+            .transition()
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .call(xAxis);
+ svg.select(".yAxis")
+            .transition()
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .call(yAxis);
+
+
+}
+
+
+</script>
+
+<!--chapter:end:06-interactive.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Conclusion
+Though it has many variations, the Sicilian Defense has its limitations. 
+As an old chess opening, the Sicilian Defense was well-known and was studied to chess players. They were proficient to either play it or to against it. Thus, based on the 20000+ games we had analyzed, white players had approximately 48% chance winning using the Sicilian Defense and the black players had approximately 52% chance winning. 
+One limitation of this study was that the dataset size was too small. Not enough games were analyzed, especially in low levels and high levels. Thus, patterns discovered in both high and lower levels were biased and this issue can be fixed in the future study by collecting more game data. 
+In future study, one can continue to study the top 20 frequency moves, the average number of moves in each chess openings or the relationship between number of turns and victory status. 
+
+<!--chapter:end:07-conclusion.Rmd-->
+

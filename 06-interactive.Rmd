@@ -81,7 +81,8 @@ var yAxis = d3.axisLeft()
 
 var histogram = d3.histogram()
   .value(function(d) { return d.winning_rate; })   // I need to give the vector of value // then the domain of the graphic
-  .thresholds(x.ticks(20)); // then the numbers of bins
+  .domain(xScale.domain())
+  .thresholds(xScale.ticks(20)); // then the numbers of bins
 // get the data
 var bins = histogram(rankjs.filter(element => element.level == "level 3"));
 var yScale = d3.scaleLinear()
