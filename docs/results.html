@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -87,7 +89,14 @@
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#ranking-players"><i class="fa fa-check"></i><b>5.1</b> Ranking Players</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="results.html"><a href="results.html#winning-rate-in-each-level"><i class="fa fa-check"></i><b>5.1.1</b> Winning Rate in Each Level</a></li>
+<li class="chapter" data-level="5.1.2" data-path="results.html"><a href="results.html#top-players-in-each-level"><i class="fa fa-check"></i><b>5.1.2</b> Top Players in Each Level</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#winning-rate-of-each-opening"><i class="fa fa-check"></i><b>5.2</b> Winning Rate of Each Opening</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#exploring-sicilian-defense"><i class="fa fa-check"></i><b>5.3</b> Exploring Sicilian Defense</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -111,37 +120,64 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
-<p>Top 10 players in each ranks</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="672" />
-<img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" />
-<img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
-<pre><code>## # A tibble: 20 x 2
-##    opening_name            counts
-##    &lt;chr&gt;                    &lt;int&gt;
-##  1 Sicilian Defense           452
-##  2 Queen&#39;s Pawn Game          221
-##  3 French Defense             198
-##  4 Ruy Lopez                  173
-##  5 King&#39;s Pawn Game           170
-##  6 Italian Game               154
-##  7 English Opening            138
-##  8 Philidor Defense           115
-##  9 Caro-Kann Defense          104
-## 10 Scandinavian Defense        97
-## 11 Zukertort Opening           80
-## 12 Four Knights Game           71
-## 13 Scotch Game                 68
-## 14 Queen&#39;s Gambit Declined     66
-## 15 Indian Game                 61
-## 16 Van&#39;t Kruijs Opening        56
-## 17 Bishop&#39;s Opening            53
-## 18 Modern Defense              51
-## 19 Slav Defense                46
-## 20 Hungarian Opening           37</code></pre>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div id="ranking-players" class="section level2">
+<h2><span class="header-section-number">5.1</span> Ranking Players</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Players were grouped into 5 different levels based on their rating scores.
+Level 1: 750 ~ 1149
+Level 2: 1150 ~ 1549
+Level 3: 1550 ~ 1949
+Level 4: 1950 ~ 2349
+Level 5: 2350 ~ 2750</p>
+<p>Most of the players’ ratings were between 1150 and 1950. Level 3 (1550 ~ 1949) has the largest number of players (482) while level 5 (2350 ~ 2750) has the smallest number of players (19).
+The distribution of players was slightly skewed to the left and the median number of players was in level 3.</p>
+<div id="winning-rate-in-each-level" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Winning Rate in Each Level</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p>Among 5 levels, players placed in level 1 had the average lowest win rates compared to other players. As ratings went up, the average win rate within each level went up as well.
+At level 1, the average win rate was around 23% while at level 5, where most players had strong chess skills, had average win rate around 65%.
+Few players has win rates of 100% and 0 % and that is because they play only one game which was won or loss and did not play any longer.</p>
+</div>
+<div id="top-players-in-each-level" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Top Players in Each Level</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>Graphs above displayed top 15 players in each level. All players played at least three games to different players and achieved high winning rates.
+For players placed in level 2 to level 4 (1150 ~ 2349), all top 15 players had achieved surprisingly high win rate of 100%. That may implied that these players were underestimated and should be placed in the higher level.</p>
+</div>
+</div>
+<div id="winning-rate-of-each-opening" class="section level2">
+<h2><span class="header-section-number">5.2</span> Winning Rate of Each Opening</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-54-1.png" width="672" />
+Players in Black or White had different choice of openings. Among various opening and defense strategies, Hungarian Opening had the highest winning probability (approximately 73%) against White.
+Moreover, Zukertort Opening had the highet winning probability (approximately 68%) against Black.
+Besides, Indian game and Van’t Kruijs Opening were great against White (win rate around 70%) and Philidor Defense and Italian Game performed well against Black (win rate around 60%).</p>
+</div>
+<div id="exploring-sicilian-defense" class="section level2">
+<h2><span class="header-section-number">5.3</span> Exploring Sicilian Defense</h2>
+<pre><code>## # A tibble: 10 x 2
+##    opening_name         counts
+##    &lt;chr&gt;                 &lt;int&gt;
+##  1 Sicilian Defense        452
+##  2 Queen&#39;s Pawn Game       221
+##  3 French Defense          198
+##  4 Ruy Lopez               173
+##  5 King&#39;s Pawn Game        170
+##  6 Italian Game            154
+##  7 English Opening         138
+##  8 Philidor Defense        115
+##  9 Caro-Kann Defense       104
+## 10 Scandinavian Defense     97</code></pre>
+<p>During the 20000+ games data we analyzed, the Sicilian Defense was the most used strategy.
+The Sicilian Defence begins with the following moves:
+1. e4 c5
+and it is the most popular and best-scoring response to White’s first move 1.e4. Its popularity may attritubed to its combative nature which meant that Black was playing not just for equality in many lines, but for the advantage.</p>
+<p>Its popularity and effectiveness will be discussed in the following paragraphs.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p>Above two graphs displayed players’ winning probabilities who implemented Sicilian Defense in each level. Apparently, players in level 4 used Sicilian Defense had the highest average win rate (75%) while level 1 players had the lowest win rate (0%). For level 3 players, the effectiveness of the Sicilian Defense varied greatly. Its average win rate was approximately 50% which was average compared to win rates in other levels, but it had the largest variance as well. Some players played the Sicilian Defense and achieved win rates around 78% and some players used the same strategy but never won.<br />
+Besides, the scatterplot indicated that both Black or White high rating players had experience against the Sicilian Defense. When against higher rating players, lower rating players normally lost even though they played the Sicilian Defense.</p>
 
+</div>
 </div>
             </section>
 
