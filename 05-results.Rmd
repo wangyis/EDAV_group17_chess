@@ -94,15 +94,7 @@ ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
         plot.caption = element_text(color = "grey68")) +
   scale_fill_brewer(palette = "Blues")
 ```
-Players were grouped into 5 different levels based on their rating scores. 
-Level 1: 750 ~ 1149
-Level 2: 1150 ~ 1549
-Level 3: 1550 ~ 1949
-Level 4: 1950 ~ 2349
-Level 5: 2350 ~ 2750
 
-Most of the players' ratings were between 1150 and 1950. Level 3 (1550 ~ 1949) has the largest number of players (482) while level 5 (2350 ~ 2750) has the smallest number of players (19). 
-The distribution of players was slightly skewed to the left and the median number of players was in level 3. 
 ```{r}
 ggplot(rank, aes(x = factor(level), fill = level)) +
   geom_bar(alpha = 0.3, size = 0.75, color = "black") + 
