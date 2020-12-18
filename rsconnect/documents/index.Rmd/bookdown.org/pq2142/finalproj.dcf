@@ -5,6 +5,12 @@ account: pq2142
 server: bookdown.org
 hostUrl: https://bookdown.org/__api__
 appId: 5972
+<<<<<<< Updated upstream
 bundleId: 30875
 url: https://bookdown.org/pq2142/finalproj/
 when: 1606161916.8235
+=======
+bundleId: 31835
+url: https://bookdown.org/pq2142/finalproj/
+when: 1608302080.90985
+>>>>>>> Stashed changes

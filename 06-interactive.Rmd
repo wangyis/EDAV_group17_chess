@@ -1,3 +1,218 @@
 # Interactive component
 
+<<<<<<< Updated upstream
 
+=======
+```{r, include=FALSE}
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(alr4)
+library(dplyr)
+library(hrbrthemes)
+library("jsonlite")
+```
+
+turn the winning rate distribution in each rating graph into d3
+```{r vectors-to-json, echo=FALSE, results="asis"}
+temp <- read.csv("dataset/rank.csv")
+cat(
+  paste(
+  '<script>
+    var rankjs = ',toJSON(temp),';
+  </script>'
+  , sep="")
+)
+```
+<div class="slidecontainer">
+  <input type="range" min="1" max="5" value="3" class="slider" id="myRange">
+  <p><b>Winning rates distribution on level <span id="demo"></span></b></p>
+</div>
+
+
+<script src="https://d3js.org/d3.v6.js"></script>
+<div id="my_dataviz"></div>
+<p>Source: https://www.kaggle.com/datasnaek/chess</p>
+
+<p> In order to have a better understanding the distribution of winning rates of each level, 
+We apply the winning rate distribution of each level into d3. 
+By clicking or moving the slider upward to choose different level,
+we can see each level's winning rate distribution in the histogram below.
+</p>
+
+<p>
+From the static graph model made by R, we roughly know the distribution of the winning rate in each level including the maximum, minimum and median.
+While in this D3 graph, by tuning the slider's value, we get a more straightforward view of how distribution changes between levels. 
+We can find the median winning rate increases as the level gets higher, the proportion of 0 winning rate gets smaller as the level gets higher, 
+while the proportion of 100% winning rate gets larger. 
+</p>
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+var w = 600;
+var h = 500;
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = w - margin.left - margin.right,
+    height = h - margin.top - margin.bottom;
+var innerWidth = w - margin.left - margin.right;
+var innerHeight = h - margin.top - margin.bottom;
+
+// set the dimensions and margins of the graph
+
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", w)
+    .attr("height", h)
+
+svg.append("rect")
+   .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", w)
+        .attr("height", h)
+        .attr("fill", "white");
+
+// X axis: scale and draw:
+
+var x = d3.scaleLinear()
+      .domain([0, 1.1])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .range([0, innerWidth]);
+
+var dur = 750
+
+// get the data
+
+function getBins(data, level, nbin) {
+  var temp = d3.histogram()
+      .value(function(d) { return d.winning_rate; })   // I need to give the vector of value // then the domain of the graphic
+      .domain([0,1.1])
+      .thresholds(x.ticks(nbin));
+  var length = data["winning_rate"].length;
+  var dataarr = []
+  for(var k =0; k<length; k++)
+  {
+    dataarr.push({"id":data["id"][k], "match_num":data["match_num"][k],
+                   "winning_rate":data["winning_rate"][k], "level":data["level"][k]})
+  }
+  return temp(dataarr.filter(element => element.level == level))
+}
+
+var bins = getBins(rankjs, "level 3", 10)
+
+var yScale = d3.scaleLinear()
+  .domain([0, d3.max(bins, function(d){return d.length;})])
+  .range([innerHeight, 0])
+
+var xScale = d3.scaleLinear()
+      .domain([0, 1.1])
+      .range([0, innerWidth]);
+
+var xAxis = d3.axisBottom()
+  .scale(xScale);
+
+var yAxis = d3.axisLeft()
+  .scale(yScale);
+
+var bars = svg.append("g")
+        .attr("id", "plot")
+        .attr("transform", `translate (${margin.left}, ${margin.top})`)
+        .selectAll("rect")
+        .data(bins);
+
+bars.enter().append("rect")
+        .merge(bars)
+        .transition()
+        .attr("x", (d,i)=>xScale(i/10))
+        .attr("y", d=> yScale(d.length))
+        .attr("width", function(d) {
+    return x(d.x1) - x(d.x0);
+  })
+        .attr("height", d => innerHeight - yScale(d.length))
+        .attr("fill", "#69b3a2");
+
+svg.append("g")
+        .attr("class", "xAxis")
+        .attr("transform", `translate (${margin.left}, ${h - margin.bottom})`)
+        .call(xAxis);
+
+svg.append("g")
+        .attr("class", "yAxis")
+        .attr("transform", `translate (${margin.left}, ${margin.top})`)
+        .call(yAxis);
+
+svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", w)
+    .attr("y", h)
+    .text("WINNING RATE");
+svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 0)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("FREQUENCY");
+
+d3.select(".slidecontainer").select("#myRange")
+  .on("click", function () {
+    var slider = document.getElementById("myRange");
+    if(slider.value == 1){ plot(rankjs, "level 1", 10)}
+    else if(slider.value == 5){plot(rankjs, "level 5", 10 )}
+    else (plot(rankjs, "level "+slider.value,10))
+})
+
+var plot = function(data, tmplevel, nbin) {
+  // And apply this function to data to get the bins
+  var bins = getBins(data, tmplevel, nbin)
+
+  xScale.domain([0,1.1]);
+
+  yScale.domain([0, d3.max(bins, function(d){return d.length;})]);
+
+  var bars = svg.select("#plot")
+            .selectAll("rect")
+            .data(bins);
+  console.log(bins)
+   bars.enter()
+          .append("rect")
+            .attr("x", d => xScale(d.x0) )
+            .attr("y", d => yScale(d.length))
+            .attr("width", xScale(1)/(nbin))
+            .attr("height", d => innerHeight - yScale(d.length))
+            .attr("fill", "#69b3a2")
+          .merge(bars)
+            .transition()
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .attr("x", d => xScale(d.x0) )
+            .attr("y", d => yScale(d.length))
+            .attr("width", xScale(1)/(nbin))
+            .attr("height", d => innerHeight - yScale(d.length))
+  
+  bars.exit().remove();
+  // Y axis: scale and draw:
+  svg.select(".xAxis")
+            .transition()
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .call(xAxis);
+ svg.select(".yAxis")
+            .transition()
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .call(yAxis);
+}
+
+
+</script>
+>>>>>>> Stashed changes
