@@ -1,5 +1,5 @@
 --- 
-title: "Final Project Draft"
+title: "Final Project - Chess Analysis"
 author: "Hanlin Tong, Wendy Qian, Yishi Wang"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
