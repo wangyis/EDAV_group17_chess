@@ -24,7 +24,7 @@
 <meta name="author" content="Hanlin Tong, Wendy Qian, Yishi Wang" />
 
 
-<meta name="date" content="2020-11-23" />
+<meta name="date" content="2020-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 
@@ -69,7 +69,7 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">Chess Analysis</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
@@ -77,7 +77,12 @@
 <li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#about-dataset"><i class="fa fa-check"></i><b>2.1</b> About Dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a><ul>
-<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#data-column-names"><i class="fa fa-check"></i><b>3.1</b> Data Column Names</a></li>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-trivial-variables"><i class="fa fa-check"></i><b>3.1</b> Cleaning Trivial Variables</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-rated-status"><i class="fa fa-check"></i><b>3.2</b> Cleaning Rated Status</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-turns"><i class="fa fa-check"></i><b>3.3</b> Cleaning Turns</a></li>
+<li class="chapter" data-level="3.4" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-users"><i class="fa fa-check"></i><b>3.4</b> Cleaning Users</a></li>
+<li class="chapter" data-level="3.5" data-path="data-transformation.html"><a href="data-transformation.html#cleaning-opening-names"><i class="fa fa-check"></i><b>3.5</b> Cleaning Opening Names</a></li>
+<li class="chapter" data-level="3.6" data-path="data-transformation.html"><a href="data-transformation.html#cleaned-dataset"><i class="fa fa-check"></i><b>3.6</b> Cleaned Dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
@@ -108,23 +113,25 @@
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
 <div id="about-dataset" class="section level2">
 <h2><span class="header-section-number">2.1</span> About Dataset</h2>
-<p>Inspired by a popular and realistic new Netflix series The Queen’s Gambit, starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates.</p>
-<p>The chess games dataset studied in this project was collected from Kaggle.com where the publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server.</p>
-<p>Variables included but not limited in this study are:</p>
-<p>• Game ID</p>
-<p>• Rated (True / False)</p>
-<p>• Start Time</p>
-<p>• End Time</p>
-<p>• Number of Turns</p>
-<p>• Victory Status (Resign / Mate)</p>
-<p>• Winner (White / Black)</p>
-<p>• Time Increment: An amount of time added to the clock after each move is made.</p>
-<p>• Players Rating Number: Numbers represent goodness of players. Better players have higher scores which are calculated by the Glicko-2 rating method.</p>
-<p>• All Moves in Standard Chess Notation: Notations that recorded the moves or the position of pieces on a chessboard by algebraic chess notation.</p>
-<p>• Opening Name: A list of names of chess openings which refers to the initial moves of a chess game.</p>
-<p>• Opening Ply: Number of moves in the opening phase.</p>
-<p>• Opening Eco: Standardized code for chess opening names.</p>
-<p>No major problems or issues were found in this dataset, despite it is a three-year-old dataset, lots of information were contained within a single chess game. While exploring dataset, an interesting observation was captured. To against King’s Gambit players (a standard offensive opening), the Sicilian Defense strategy (a standard defensive opening) were used commonly among players. And we shall discuss its effect on winning rates in greater details following.</p>
+<p>Hanlin Tong was responsible for collecting the data and the chess games dataset studied in this project was collected from Kaggle.com.
+link：<a href="https://www.kaggle.com/datasnaek/chess" class="uri">https://www.kaggle.com/datasnaek/chess</a></p>
+<p>The publisher collected over 20,000 games from a selection of users on the site Lichess.org, which is a free and open-source Internet chess server run by a non-profit organization of the sane name. Players can play anonymously and for those members who registered are allowed to play rated games on the server.</p>
+<p>This dataset is credible since i) it includes metadata, such as subtitle, tags, overview description and cover image, ii) it has file descriptions and used appropriate file formats. It is also licensed by CC0 1.0 Universal Public Domain Dedication, and iii) it has a public kernel and task. Combined, it achieved a total usability score of 8.2.</p>
+<p>Variables included but not limited in this study are:
+• Game ID
+• Rated (True / False)
+• Start Time
+• End Time
+• Number of Turns
+• Victory Status (Resign / Mate)
+• Winner (White / Black)
+• Time Increment: An amount of time added to the clock after each move is made.
+• Players Rating Number: Numbers represent goodness of players. Better players have higher scores which are calculated by the Glicko-2 rating method.
+• All Moves in Standard Chess Notation: Notations that recorded the moves or the position of pieces on a chessboard by algebraic chess notation.
+• Opening Name: A list of names of chess openings which refers to the initial moves of a chess game.
+• Opening Ply: Number of moves in the opening phase.
+• Opening Eco: Standardized code for chess opening names.
+No major problems or issues were found in this dataset, despite it is a three-year-old dataset, lots of information were contained within a single chess game. While exploring dataset, an interesting observation was captured. To against King’s Gambit players (a standard offensive opening), the Sicilian Defense strategy (a standard defensive opening) were used commonly among players. And we shall discuss its effect on winning rates in greater details following.</p>
 
 </div>
 </div>
