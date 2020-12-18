@@ -11,5 +11,10 @@ cleaned-dataset
 missing-values
 check-missing-values
 results
+ranking-players
+winning-rate-in-each-level
+top-players-in-each-level
+winning-rate-of-each-opening
+exploring-sicilian-defense
 interactive-component
 conclusion

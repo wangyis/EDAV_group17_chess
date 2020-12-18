@@ -34,7 +34,6 @@ getMatchNum <- function(df, left, right){
 }
 ```
 
-
 ```{r}
 getWinNum <- function(df, left,right){
   tempW <- df %>%
@@ -68,29 +67,6 @@ rankPlayer<-function(df, left, right){
 ```
 
 ```{r}
-ggplot(rank, aes(x = factor(level), fill = level)) +
-  geom_bar(alpha = 0.3, size = 0.75, color = "black") + 
-  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.7) +
-  ylim(0,650) +
-  ggtitle("Number of Players in Each Level") +
-  labs(x = "", y = "Number of Players", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
-  theme_bw() +
-  theme(legend.position = "none",
-    plot.title = element_text(face = "bold",hjust = 0.5), 
-        plot.caption = element_text(color = "grey68")) + 
-  scale_fill_brewer(palette = "Blues")
-```
-Players were grouped into 5 different levels based on their rating scores. 
-Level 1: 750 ~ 1149
-Level 2: 1150 ~ 1549
-Level 3: 1550 ~ 1949
-Level 4: 1950 ~ 2349
-Level 5: 2350 ~ 2750
-
-Most of the players' ratings were between 1150 and 1950. Level 3 (1550 ~ 1949) has the largest number of players (482) while level 5 (2350 ~ 2750) has the smallest number of players (19). 
-The distribution of players was slightly skewed to the left and the median number of players was in level 3. 
-
-```{r}
 rank750<-rankPlayer(clean_games, 750, 1149)
 rank750$level = "level 1"
 rank1150<-rankPlayer(clean_games,1150,1549)
@@ -105,6 +81,35 @@ rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
 write.csv(rank, "dataset/rank.csv")
 ```
 
+## Ranking Players
+
+```{r}
+ggplot(rank, aes(x = factor(level), fill = level)) +
+  geom_bar(alpha = 0.3, size = 0.75, color = "black") + 
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.7) +
+  ylim(0,650) +
+  ggtitle("Number of Players in Each Level") +
+  labs(x = "", y = "Number of Players", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
+  theme_bw() +
+  theme(legend.position = "none",
+    plot.title = element_text(face = "bold",hjust = 0.5), 
+        plot.caption = element_text(color = "grey68")) + 
+  scale_fill_brewer(palette = "Blues")
+```
+
+Players were grouped into 5 different levels based on their rating scores. 
+Level 1: 750 ~ 1149
+Level 2: 1150 ~ 1549
+Level 3: 1550 ~ 1949
+Level 4: 1950 ~ 2349
+Level 5: 2350 ~ 2750
+
+Most of the players' ratings were between 1150 and 1950. Level 3 (1550 ~ 1949) has the largest number of players (482) while level 5 (2350 ~ 2750) has the smallest number of players (19). 
+The distribution of players was slightly skewed to the left and the median number of players was in level 3. 
+
+
+### Winning Rate in Each Level
+
 ```{r}
 ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
   geom_boxplot(alpha = 0.3, size = 0.75) + 
@@ -117,22 +122,11 @@ ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
   scale_fill_brewer(palette = "Blues")
 ```
 
-```{r}
-ggplot(rank, aes(x = factor(level), fill = level)) +
-  geom_bar(alpha = 0.3, size = 0.75, color = "black") + 
-  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.7) +
-  ylim(0,650) +
-  ggtitle("Number of players in each level") +
-  labs(x = "", y = "Number of Players", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
-  theme_bw() +
-  theme(legend.position = "none",
-    plot.title = element_text(face = "bold",hjust = 0.5), 
-        plot.caption = element_text(color = "grey68")) +
-  scale_fill_brewer(palette = "Blues")
-```
 Among 5 levels, players placed in level 1 had the average lowest win rates compared to other players. As ratings went up,  the average win rate within each level went up as well. 
 At level 1, the average win rate was around 23% while at level 5, where most players had strong chess skills, had average win rate around 65%.
 Few players has win rates of 100% and 0 % and that is because they play only one game which was won or loss and did not play any longer. 
+
+### Top Players in Each Level
 
 ```{r}
 top15 <-rbind(rank750[order(-rank750$winning_rate,-rank750$match_num),][1:15,],
@@ -150,23 +144,11 @@ ggplot(top15, aes(x = winning_rate, reorder(id, winning_rate))) +
     plot.title = element_text(face = "bold",hjust = 0.5), 
         plot.caption = element_text(color = "grey68"))
 ```
+
 Graphs above displayed top 15 players in each level. All players played at least three games to different players and achieved high winning rates. 
 For players placed in level 2 to level 4 (1150 ~ 2349), all top 15 players had achieved surprisingly high win rate of 100%. That may implied that these players were underestimated and should be placed in the higher level. 
-```{r}
-openings <- clean_games %>%
-  group_by(opening_name) %>% 
-  summarize(counts = n())
-openings<- openings[order(-openings$counts),]
-head(openings, 20)
 
-```
-During the 20000+ games data we analyzed, the Sicilian Defense was the most used strategy. 
-The Sicilian Defence begins with the following moves:
-1. e4 c5
-and it is the most popular and best-scoring response to White's first move 1.e4. Its popularity may attritubed to its combative nature which meant that Black was playing not just for equality in many lines, but for the advantage. 
-
-Its popularity and effectiveness will be discussed in the following paragraphs. 
-
+## Winning Rate of Each Opening
 
 ```{r}
 opening_win <- clean_games %>% group_by(winner) %>% count(opening_name, sort = TRUE)
@@ -185,13 +167,30 @@ ggplot(opening_win, aes(reorder(opening_name,n), n, fill = winner)) +
         legend.position = "bottom")+
   scale_fill_manual(values = c("black", "cornsilk"))+
   labs(y = "Winning Probability", x = NULL, fill = "Winner",
-       title = "Winning Probability of Openings") +
+       title = "Winning Probability of Openings", caption = "Source: https://www.kaggle.com/datasnaek/chess") +
   guides(color = FALSE)
 ```
 Players in Black or White had different choice of openings. Among various opening and defense strategies, Hungarian Opening had the highest winning probability (approximately 73%) against White. 
 Moreover, Zukertort Opening had the highet winning probability (approximately 68%) against Black. 
 Besides, Indian game and Van't Kruijs Opening were great against White (win rate around 70%) and Philidor Defense and Italian Game performed well against Black (win rate around 60%).
 
+
+## Exploring Sicilian Defense
+
+```{r}
+openings <- clean_games %>%
+  group_by(opening_name) %>% 
+  summarize(counts = n())
+openings<- openings[order(-openings$counts),]
+head(openings, 10)
+```
+
+During the 20000+ games data we analyzed, the Sicilian Defense was the most used strategy. 
+The Sicilian Defence begins with the following moves:
+1. e4 c5
+and it is the most popular and best-scoring response to White's first move 1.e4. Its popularity may attritubed to its combative nature which meant that Black was playing not just for equality in many lines, but for the advantage. 
+
+Its popularity and effectiveness will be discussed in the following paragraphs. 
 
 ```{r}
 sicilian <- clean_games[clean_games$opening_name == "Sicilian Defense",]
@@ -211,7 +210,6 @@ ggplot(sicilian, aes(x = white_rating, y = black_rating, color = winner, shape =
        title = "Win & Draw Rating with Sicilian Defense Opening",  
        caption = "Source: https://www.kaggle.com/datasnaek/chess")
 ```
-
 
 ```{r}
 
@@ -237,5 +235,6 @@ ggplot(sc_rank, aes(x = level, y = winning_rate, fill = level)) +
         plot.caption = element_text(color = "grey68")) +
   scale_fill_brewer(palette = "Blues")
 ```
+
 Above two graphs displayed players' winning probabilities who implemented Sicilian Defense in each level. Apparently, players in level 4 used Sicilian Defense had the highest average win rate (75%) while level 1 players had the lowest win rate (0%). For level 3 players, the effectiveness of the Sicilian Defense varied greatly. Its average win rate was approximately 50% which was average compared to win rates in other levels, but it had the largest variance as well. Some players played the Sicilian Defense and achieved win rates around 78% and some players used the same strategy but never won.  
 Besides, the scatterplot indicated that both Black or White high rating players had experience against the Sicilian Defense. When against higher rating players, lower rating players normally lost even though they played the Sicilian Defense. 

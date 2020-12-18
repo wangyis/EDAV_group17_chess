@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data transformation | Final Project Draft</title>
-  <meta name="description" content="Chapter 3 Data transformation | Final Project Draft" />
+  <title>Chapter 3 Data transformation | EDAV Final Project - Chess Analysis</title>
+  <meta name="description" content="Chapter 3 Data transformation | EDAV Final Project - Chess Analysis" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data transformation | Final Project Draft" />
+  <meta property="og:title" content="Chapter 3 Data transformation | EDAV Final Project - Chess Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data transformation | Final Project Draft" />
+  <meta name="twitter:title" content="Chapter 3 Data transformation | EDAV Final Project - Chess Analysis" />
   
   
   
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -87,7 +89,14 @@
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#ranking-players"><i class="fa fa-check"></i><b>5.1</b> Ranking Players</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="results.html"><a href="results.html#winning-rate-in-each-level"><i class="fa fa-check"></i><b>5.1.1</b> Winning Rate in Each Level</a></li>
+<li class="chapter" data-level="5.1.2" data-path="results.html"><a href="results.html#top-players-in-each-level"><i class="fa fa-check"></i><b>5.1.2</b> Top Players in Each Level</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#winning-rate-of-each-opening"><i class="fa fa-check"></i><b>5.2</b> Winning Rate of Each Opening</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#exploring-sicilian-defense"><i class="fa fa-check"></i><b>5.3</b> Exploring Sicilian Defense</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -101,7 +110,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Final Project Draft</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Final Project - Chess Analysis</a>
           </h1>
         </div>
 
@@ -114,15 +123,13 @@
 <div id="cleaning-trivial-variables" class="section level2">
 <h2><span class="header-section-number">3.1</span> Cleaning Trivial Variables</h2>
 <p>The dataset has the following variables.</p>
-<pre><code>##  [1] &quot;id&quot;             &quot;rated&quot;          &quot;created_at&quot;     &quot;last_move_at&quot;  
-##  [5] &quot;turns&quot;          &quot;victory_status&quot; &quot;winner&quot;         &quot;increment_code&quot;
-##  [9] &quot;white_id&quot;       &quot;white_rating&quot;   &quot;black_id&quot;       &quot;black_rating&quot;  
-## [13] &quot;moves&quot;          &quot;opening_eco&quot;    &quot;opening_name&quot;   &quot;opening_ply&quot;</code></pre>
+<pre><code>##  [1] &quot;id&quot;             &quot;rated&quot;          &quot;created_at&quot;     &quot;last_move_at&quot;   &quot;turns&quot;          &quot;victory_status&quot; &quot;winner&quot;        
+##  [8] &quot;increment_code&quot; &quot;white_id&quot;       &quot;white_rating&quot;   &quot;black_id&quot;       &quot;black_rating&quot;   &quot;moves&quot;          &quot;opening_eco&quot;   
+## [15] &quot;opening_name&quot;   &quot;opening_ply&quot;</code></pre>
 <p>We wanted to remove <code>id, created_at, last_move_at, increment_code, moves, opening_eco, opening_ply</code> since some of them, like <code>id</code> or <code>increment_code</code> do not have pivotal information for our problems. Or they are providing similar information as other variables, such as <code>opening_eco</code>.</p>
 <p>The rest variables are:</p>
-<pre><code>## [1] &quot;rated&quot;          &quot;turns&quot;          &quot;victory_status&quot; &quot;winner&quot;        
-## [5] &quot;white_id&quot;       &quot;white_rating&quot;   &quot;black_id&quot;       &quot;black_rating&quot;  
-## [9] &quot;opening_name&quot;</code></pre>
+<pre><code>## [1] &quot;rated&quot;          &quot;turns&quot;          &quot;victory_status&quot; &quot;winner&quot;         &quot;white_id&quot;       &quot;white_rating&quot;   &quot;black_id&quot;      
+## [8] &quot;black_rating&quot;   &quot;opening_name&quot;</code></pre>
 </div>
 <div id="cleaning-rated-status" class="section level2">
 <h2><span class="header-section-number">3.2</span> Cleaning Rated Status</h2>
@@ -148,20 +155,14 @@
 <div id="cleaning-opening-names" class="section level2">
 <h2><span class="header-section-number">3.5</span> Cleaning Opening Names</h2>
 <pre><code>## 
-##        Sicilian Defense       Queen&#39;s Pawn Game          French Defense 
-##                     452                     221                     198 
-##               Ruy Lopez        King&#39;s Pawn Game            Italian Game 
-##                     173                     170                     154 
-##         English Opening        Philidor Defense       Caro-Kann Defense 
-##                     138                     115                     104 
-##    Scandinavian Defense       Zukertort Opening       Four Knights Game 
-##                      97                      80                      71 
-##             Scotch Game Queen&#39;s Gambit Declined             Indian Game 
-##                      68                      66                      61 
-##    Van&#39;t Kruijs Opening        Bishop&#39;s Opening          Modern Defense 
-##                      56                      53                      51 
-##            Slav Defense       Hungarian Opening 
-##                      46                      37</code></pre>
+##        Sicilian Defense       Queen&#39;s Pawn Game          French Defense               Ruy Lopez        King&#39;s Pawn Game 
+##                     452                     221                     198                     173                     170 
+##            Italian Game         English Opening        Philidor Defense       Caro-Kann Defense    Scandinavian Defense 
+##                     154                     138                     115                     104                      97 
+##       Zukertort Opening       Four Knights Game             Scotch Game Queen&#39;s Gambit Declined             Indian Game 
+##                      80                      71                      68                      66                      61 
+##    Van&#39;t Kruijs Opening        Bishop&#39;s Opening          Modern Defense            Slav Defense       Hungarian Opening 
+##                      56                      53                      51                      46                      37</code></pre>
 <p>The original opening names are really messy since some openings have very detailed explanation. By doing related research, we decided to use the more general definition of each opening for each game. This tidy version is more operable for visualization and conclusion.</p>
 </div>
 <div id="cleaned-dataset" class="section level2">
@@ -439,7 +440,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/03-cleaning.Rmd",
+"link": "https://github.com/wangyis/EDAV_group17_chess/edit/main/03-cleaning.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -447,7 +448,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/03-cleaning.Rmd",
+"link": "https://github.com/wangyis/EDAV_group17_chess/blob/main/03-cleaning.Rmd",
 "text": null
 },
 "download": null,

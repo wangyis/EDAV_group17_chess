@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Final Project Draft</title>
-  <meta name="description" content="Final Project Draft" />
+  <title>EDAV Final Project - Chess Analysis</title>
+  <meta name="description" content="EDAV Final Project - Chess Analysis" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Final Project Draft" />
+  <meta property="og:title" content="EDAV Final Project - Chess Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Final Project Draft" />
+  <meta name="twitter:title" content="EDAV Final Project - Chess Analysis" />
   
   
   
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -87,7 +89,14 @@
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
 <li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#check-missing-values"><i class="fa fa-check"></i><b>4.1</b> Check Missing Values</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#ranking-players"><i class="fa fa-check"></i><b>5.1</b> Ranking Players</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="results.html"><a href="results.html#winning-rate-in-each-level"><i class="fa fa-check"></i><b>5.1.1</b> Winning Rate in Each Level</a></li>
+<li class="chapter" data-level="5.1.2" data-path="results.html"><a href="results.html#top-players-in-each-level"><i class="fa fa-check"></i><b>5.1.2</b> Top Players in Each Level</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#winning-rate-of-each-opening"><i class="fa fa-check"></i><b>5.2</b> Winning Rate of Each Opening</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#exploring-sicilian-defense"><i class="fa fa-check"></i><b>5.3</b> Exploring Sicilian Defense</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -101,7 +110,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Final Project Draft</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Final Project - Chess Analysis</a>
           </h1>
         </div>
 
@@ -110,17 +119,15 @@
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Final Project Draft</h1>
+<h1 class="title">EDAV Final Project - Chess Analysis</h1>
 <p class="author"><em>Hanlin Tong, Wendy Qian, Yishi Wang</em></p>
 <p class="date"><em>2020-12-17</em></p>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p>Inspired by a popular and realistic new Netflix series The Queen’s Gambit, in which the starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we are interested in digging out factors that affect chess games winning rates.</p>
-<p>History of chess can be traced back to 1500 years, while the predecessor of the game probably originated in India and spread to Persia. When the Arabs conquered Persia, chess was taken up by the Muslim world and subsequently spread to Southern Europe, where it evolved into roughly its current form in the 15th century.</p>
-<p>In the 20th century, chess theory leaped forward greatly. A World Chess Federation (FIDE) was established as well. In 1997, a computer first beats a chess world champion in the Deep Blue versus Garry Kasparov match, and since then, computer analysis has contributed to much of the development in chess theory and has become an important part of preparation in professional human chess. Online chess gaming, which was original in the mid 1990s, became popular in 21st century.</p>
-<p>A chess opening, or the “opening move”, is the group of initial moves a game and it has been given names such as Sicilian Defense or Grob’s Attack. There are dozens of different openings which are varied from quiet positional play, such as Reti Opening, to very aggressive move, the Latvian Gambit.</p>
-<p>Chess opening is recommended for anyone and In this study, we will analyze various chess openings or any other factors that may affect game result.</p>
+<p>Inspired by recent Netflix series “The Queen’s Gambit”, which the starring actress Anya Taylor-Jay portrays Beth Harmon, a gifted girl orphan struggling with a drug addiction who grew in the 1960s male-dominated world of chess and became a grandmaster and an U.S. Champion, we were interested in what strategies chess players used in their games.</p>
+<p>History of chess can be traced back to 1500 years, while the predecessor of the game probably originated in India and spread to Persia. When the Arabs conquered Persia, chess was taken up by the Muslim world and subsequently spread to Southern Europe, where it evolved into roughly its current form in the 15th century. In the 20th century, chess theory leaped forward greatly. A World Chess Federation (FIDE) was established as well. In 1997, a computer first beats a chess world champion in the Deep Blue versus Garry Kasparov match, and since then, computer analysis has contributed to much of the development in chess theory and has become an important part of preparation in professional human chess. Online chess gaming, which was original in the mid 1990s, became popular in 21st century.</p>
+<p>Many factors affected players’ win rates but openings played vital parts in it. A chess opening, or the “opening move”, is the group of initial moves a game and it has been given names such as French Defense or Grob’s Attack. There are dozens of different openings which are varied from quiet positional play, such as Reti Opening, to very aggressive move, the Latvian Gambit. Chess opening is recommended for any chess player. In this study, we will analyze various chess openings and their effects on winning probabilities. Meanwhile, “the Sicilian Defense”, as a chess opening frequently mentioned in the show “The Queen’s Gambit”, will be particularly studied its effectiveness among games played by different skill levels players.</p>
 
 </div>
             </section>
@@ -160,7 +167,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/index.Rmd",
+"link": "https://github.com/wangyis/EDAV_group17_chess/edit/main/index.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -168,7 +175,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/index.Rmd",
+"link": "https://github.com/wangyis/EDAV_group17_chess/blob/main/index.Rmd",
 "text": null
 },
 "download": null,
