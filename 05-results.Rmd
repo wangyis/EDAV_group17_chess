@@ -67,6 +67,22 @@ rankPlayer<-function(df, left, right){
   return(temp)
 }
 ```
+
+```{r}
+rank750<-rankPlayer(clean_games, 750, 1149)
+rank750$level = "level 1"
+rank1150<-rankPlayer(clean_games,1150,1549)
+rank1150$level = "level 2"
+rank1550<-rankPlayer(clean_games,1550,1949)
+rank1550$level ="level 3"
+rank1950<-rankPlayer(clean_games,1950, 2349)
+rank1950$level ="level 4"
+rank2350<-rankPlayer(clean_games, 2350,2749)
+rank2350$level ="level 5"
+rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
+write.csv(rank, "dataset/rank.csv")
+```
+
 ```{r}
 ggplot(rank, aes(x = level, y = winning_rate, fill = level)) +
   geom_boxplot(alpha = 0.3, size = 0.75) + 
@@ -87,22 +103,6 @@ Level 5: 2350 ~ 2750
 
 Most of the players' ratings were between 1150 and 1950. Level 3 (1550 ~ 1949) has the largest number of players (482) while level 5 (2350 ~ 2750) has the smallest number of players (19). 
 The distribution of players was slightly skewed to the left and the median number of players was in level 3. 
-```{r}
-rank750<-rankPlayer(clean_games, 750, 1149)
-rank750$level = "level 1"
-rank1150<-rankPlayer(clean_games,1150,1549)
-rank1150$level = "level 2"
-rank1550<-rankPlayer(clean_games,1550,1949)
-rank1550$level ="level 3"
-rank1950<-rankPlayer(clean_games,1950, 2349)
-rank1950$level ="level 4"
-rank2350<-rankPlayer(clean_games, 2350,2749)
-rank2350$level ="level 5"
-rank<- rbind(rank750, rank1150,rank1550, rank1950, rank2350)
-write.csv(rank, "dataset/rank.csv")
-```
-
-
 ```{r}
 ggplot(rank, aes(x = factor(level), fill = level)) +
   geom_bar(alpha = 0.3, size = 0.75, color = "black") + 
