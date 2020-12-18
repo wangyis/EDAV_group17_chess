@@ -94,7 +94,14 @@ function getBins(data, level, nbin) {
       .value(function(d) { return d.winning_rate; })   // I need to give the vector of value // then the domain of the graphic
       .domain([0,1.1])
       .thresholds(x.ticks(nbin));
-  return temp(data.filter(element => element.level == level))
+  var length = data["winning_rate"].length;
+  var dataarr = []
+  for(var k =0; k<length; k++)
+  {
+    dataarr.push({"id":data["id"][k], "match_num":data["match_num"][k],
+                   "winning_rate":data["winning_rate"][k], "level":data["level"][k]})
+  }
+  return temp(dataarr.filter(element => element.level == level))
 }
 
 var bins = getBins(rankjs, "level 3", 10)
